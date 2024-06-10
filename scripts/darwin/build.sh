@@ -36,8 +36,8 @@ echo Build with CMake
 # https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFBundles/BundleTypes/BundleTypes.html
 cmake -G Ninja \
   -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
-  -DCMAKE_PREFIX_PATH=/opt/qt512/lib/cmake \
-  -DCMAKE_OSX_DEPLOYMENT_TARGET=12.7 \
+  -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
+  -DCMAKE_PREFIX_PATH=${Qt5_DIR}lib/cmake \
   -DCMAKE_BUILD_TYPE=Release \
   -DDLT_USE_QT_RPATH=ON \
   -DDLT_PARSER=ON \
