@@ -30,12 +30,12 @@ jobs:
       - name: Build project
         run: scripts/darwin/build.sh
       - name: Archive artifact
-        run: zip DLT-macOS.zip -r build/dist
+        run: zip DLT-macOS-${{ matrix.xcode }}.zip -r build/dist
       - name: Upload DLT artifact
         uses: actions/upload-artifact@v4
         with:
           name: DLT-Mac
-          path: DLT-macOS.zip
+          path: DLT-macOS-${{ matrix.xcode }}.zip
 
   buildLinux:
     name: Build ${{ matrix.ubuntu }}
