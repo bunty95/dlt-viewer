@@ -48,7 +48,7 @@ cmake -G Xcode \
   -DDLT_RESOURCE_INSTALLATION_PATH="${APP_DIR_NAME}/Contents/Resources" \
   -DDLT_PLUGIN_INSTALLATION_PATH="${APP_DIR_NAME}/Contents/MacOS/plugins" \
   "${SRC_DIR}"
-cmake --build "${BUILD_DIR}"
+# cmake --build "${BUILD_DIR}"
 
 # See src/cmake/Darwin.cmake and scripts/darwin/package.cmake
 #
