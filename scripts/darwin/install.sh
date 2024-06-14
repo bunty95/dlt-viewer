@@ -6,7 +6,9 @@ pwd
 
 brew update
 brew install qt@5
-brew install qt
+#brew install qt
+
+
 #brew unlink qt@5 && brew link --force qt@5
 #brew link --overwrite qt@5 --force --overwrite
 # https://github.com/Homebrew/homebrew-core/issues/8392
