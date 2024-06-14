@@ -13,16 +13,16 @@ cd "${BUILD_DIR}"
 
 if [[ $(uname -m) == 'arm64' ]]; then
   Qt5_DIR="/opt/homebrew/opt/qt@5"
-  Qt6_DIR="/opt/homebrew/opt/qt@6"
+#  Qt6_DIR="/opt/homebrew/opt/qt@6"
   echo "Build with cmake $(uname -m) $Qt5_DIR"
   qmake ../BuildDltViewer.pro
   make 
 else
   Qt5_DIR="/usr/local/opt/qt@5"
-  Qt6_DIR="/usr/local/opt/qt@6"
+#  Qt6_DIR="/usr/local/opt/qt@6"
   echo "Build with qmake $(uname -m) $Qt5_DIR"
-  qmake ../BuildDltViewer.pro
-  make
+#  qmake ../BuildDltViewer.pro
+#  make
 fi
 
 #make
@@ -36,9 +36,9 @@ cd "${BUILD_DIR}"
 echo Build with CMake
 # Installation paths configuration creates proper macOS Application bundle structure
 # https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFBundles/BundleTypes/BundleTypes.html
-cmake -G Ninja \
+cmake -G Xcode \
   -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
-  -DCMAKE_PREFIX_PATH=${Qt6_DIR}/lib/cmake \
+  -DCMAKE_PREFIX_PATH=${Qt5_DIR}/lib/cmake \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=12.7 \
   -DCMAKE_BUILD_TYPE=Release \
   -DDLT_USE_QT_RPATH=ON \
