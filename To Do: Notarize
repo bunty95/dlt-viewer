@@ -1,0 +1,30 @@
+You will need to modify your Gradle script as follows:
+
+1) Change your code signing. I've seen references to people recommending against the use of "--deep". I don't know what that's about, but I see no readon to challenge it. I always try the defaults first and only use funky hacks if necessary. If this doesn't work for you, you'll have to dig deeper into code signing. You will need to use a secure timestamp and enable the hardened runtime, like so:
+
+codesign --timestamp --options=runtime -s "Developer ID Application: Your Company Here" -v /path/to/your/app
+
+2) Submit your app for notarization:
+
+xcrun altool --notarize-app --primary-bundle-id "com.yourcompany.whatever" --username "APPLE ID" --password "APP-SPECIFIC PASSWORD" --file /path/to/installer/package
+
+You might need to deal with how you are packaging the app. That's out of scope for now. You'll get an ID that you'll need for the next step if you are trying to automate this.
+
+3) Wait 5 minutes or so
+
+4) Check your status:
+
+xcrun altool --notarization-history 0 -u "APPLE ID" -p "APP-SPECIFIC PASSWORD"
+
+Check the status of your request using that ID from step 2. If not notarized yet, go to step 3. Maybe timeout after a while.
+
+5) Staple your ticket:
+
+xcrun stapler staple /path/to/installer/package
+
+6) Verify your signature if you want.
+
+
+
+You'll also get an e-mail and an Xcode notification. It might be better to switch to an asynchonrous process. I hate polling.
+
