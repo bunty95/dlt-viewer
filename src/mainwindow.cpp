@@ -7040,26 +7040,29 @@ void MainWindow::filterUpdate()
 
         if(item->filter.isMarker())
         {
-            item->setBackground(0,QColor(item->filter.filterColour));
+            //item->setBackground(0,QColor(item->filter.filterColour));
             item->setBackground(1,QColor(item->filter.filterColour));
-            item->setForeground(0,QColor(0xff,0xff,0xff));
+            //item->setForeground(0,QColor(0xff,0xff,0xff));
             item->setForeground(1,DltUiUtils::optimalTextColor(QColor(item->filter.filterColour)));
         }
         else
         {
-            item->setBackground(0,QColor(0xff,0xff,0xff));
+            //item->setBackground(0,QColor(0xff,0xff,0xff));
             item->setBackground(1,QColor(0xff,0xff,0xff));
-            item->setForeground(0,QColor(0xff,0xff,0xff));
+            //item->setForeground(0,QColor(0xff,0xff,0xff));
             item->setForeground(1,DltUiUtils::optimalTextColor(QColor(0xff,0xff,0xff)));
 
             if (QDltSettingsManager::UI_Colour::UI_Dark == QDltSettingsManager::getInstance()->uiColour)
             {
-                item->setBackground(0,QColor(31,31,31));
+                //item->setBackground(0,QColor(31,31,31));
                 item->setBackground(1,QColor(31,31,31));
-                item->setForeground(0,QColor(0xff,0xff,0xff));
+                //item->setForeground(0,QColor(0xff,0xff,0xff));
                 item->setForeground(1,DltUiUtils::optimalTextColor(QColor(31,31,31)));
             }
         }
+
+        // resize active column automatically
+        project.filter->resizeColumnToContents(0);
 
         if(filter->enableRegexp_Appid || filter->enableRegexp_Context || filter->enableRegexp_Header || filter->enableRegexp_Payload)
         {
@@ -8153,9 +8156,10 @@ void MainWindow::searchtable_cellSelected( QModelIndex index)
 
 }
 
-void MainWindow::on_comboBoxFilterSelection_textActivated(const QString &arg1)
+void MainWindow::on_comboBoxFilterSelection_currentTextChanged(const QString &arg1)
+//void MainWindow::on_comboBoxFilterSelection_textActivated(const QString &arg1)
 {
-    qDebug() << "on_comboBoxFilterSelection_textActivated" << arg1;
+    qDebug() << "on_comboBoxFilterSelection_currentTextChanged" << arg1;
 
     /* load current selected filter */
     if(!arg1.isEmpty() && project.LoadFilter(arg1,!ui->checkBoxAppendDefaultFilter->isChecked()))
