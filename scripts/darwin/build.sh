@@ -20,7 +20,7 @@ else
   Qt5_DIR="/usr/local/opt/qt"
   echo "Build with qmake $(uname -m) $Qt5_DIR"
   qmake ../BuildDltViewer.pro
-  make
+#  make
 fi
 
 #make
