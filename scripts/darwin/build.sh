@@ -5,6 +5,15 @@ SRC_DIR=$(pwd)
 BUILD_DIR="${SRC_DIR}/build"
 INSTALL_DIR="${BUILD_DIR}/install"
 APP_DIR_NAME="DLTViewer.app"
+APP_DIR_NAME_ZIP="DLTViewer.zip"
+PATH_APP="${INSTALL_DIR}/${APP_DIR_NAME}"
+PATH_ZIP="${INSTALL_DIR}/${APP_DIR_NAME_ZIP}"
+
+
+echo Check Path for .app and .zip
+
+echo "App path := ${PATH_APP}"
+echo "Zip path := ${PATH_ZIP}"
 
 rm -rf "${INSTALL_DIR}"
 rm -rf "${SRC_DIR}/build"
@@ -67,7 +76,11 @@ FULL_VERSION=$(cat "${BUILD_DIR}/full_version.txt")
 echo "FULL_VERSION=${FULL_VERSION}"
 
 echo Codesign using certificate with secrets from github
-# codesign -s "${CERTIFICATE NAME (XXXXXXXX)}" --force --options=runtime "DLTViewer.app" --deep
+#codesign --timestamp --options=runtime -s "${APPLE_CERTIFICATE}" -v ${INSTALL_DIR}/${APP_DIR_NAME} --deep
+#ditto -c -k --keepParent ${PATH_APP} ${PATH_ZIP}
+#xcrun notarytool submit --apple-id "${APPLE_ID}" --team-id "${TEAM_ID}" --password "${APP_PASSWORD}" ${PATH_ZIP}
+#xcrun stapler staple ${PATH_APP}
+
 
 mkdir -p dist
 cp ../scripts/darwin/install.md dist
