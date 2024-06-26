@@ -1,3 +1,5 @@
+[![PullRequest](https://github.com/bunty95/dlt-viewer/actions/workflows/BuildPR.yml/badge.svg?branch=xCode)](https://github.com/bunty95/dlt-viewer/actions/workflows/BuildPR.yml)
+
 # Diagnostic Log and Trace Viewer
 
 ## Overview
