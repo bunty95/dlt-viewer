@@ -75,11 +75,11 @@ cd "${BUILD_DIR}"
 FULL_VERSION=$(cat "${BUILD_DIR}/full_version.txt")
 echo "FULL_VERSION=${FULL_VERSION}"
 
-echo Codesign using certificate with secrets from github
-codesign --timestamp --options=runtime -s "${APPLE_CERTIFICATE}" -v ${INSTALL_DIR}/${APP_DIR_NAME} --deep
-ditto -c -k --keepParent ${PATH_APP} ${PATH_ZIP}
-xcrun notarytool submit --apple-id "${APPLE_ID}" --team-id "${TEAM_ID}" --password "${APP_PASSWORD}" ${PATH_ZIP}
-xcrun stapler staple ${PATH_APP}
+#echo Codesign using certificate with secrets from github
+#codesign --timestamp --options=runtime -s "${APPLE_CERTIFICATE}" -v ${INSTALL_DIR}/${APP_DIR_NAME} --deep
+#ditto -c -k --keepParent ${PATH_APP} ${PATH_ZIP}
+#xcrun notarytool submit --apple-id "${APPLE_ID}" --team-id "${TEAM_ID}" --password "${APP_PASSWORD}" ${PATH_ZIP}
+#xcrun stapler staple ${PATH_APP}
 
 
 mkdir -p dist
