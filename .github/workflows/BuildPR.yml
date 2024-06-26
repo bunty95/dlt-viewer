@@ -67,6 +67,15 @@ jobs:
         run: cmake --version
       - name: Build project
         run: scripts/darwin/build.sh
+
+      - name: Codesign using certificate with secrets from github
+        run: |
+          codesign --timestamp --options=runtime -s "${APPLE_CERTIFICATE}" -v build/install/DLTViewer.app --deep
+          ditto -c -k --keepParent build/install/DLTViewer.app build/install/DLTViewer.zip
+          xcrun notarytool submit --apple-id "${APPLE_ID}" --team-id "${TEAM_ID}" --password "${APP_PASSWORD}" build/install/DLTViewer.zip
+          sleep 240
+          xcrun stapler staple build/install/DLTViewer.app
+  
       - name: Archive artifact
         uses: actions/upload-artifact@v4
         if: ${{ success() }}
