@@ -60,7 +60,7 @@ jobs:
       - name: Build project
         run: scripts/darwin/build.sh
       - name: Archive artifact
-        run: zip DLT-macOS-arm.zip -r build/dist
+        run: zip DLT-macOS-arm64.zip -r build/dist
       - name: Upload DLT artifact
         uses: actions/upload-artifact@v4
         with:
