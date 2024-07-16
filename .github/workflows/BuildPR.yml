@@ -65,7 +65,7 @@ jobs:
       - name: Notarize app bundle
         env:
           PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.APPLE_ID }}
-          PROD_MACOS_NOTARIZATION_TEAM_ID: ${{ secrets.PTEAM_ID }}
+          PROD_MACOS_NOTARIZATION_TEAM_ID: ${{ secrets.TEAM_ID }}
           PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.APP_PASSWORD }}
         run: |
           echo "Create keychain profile"
