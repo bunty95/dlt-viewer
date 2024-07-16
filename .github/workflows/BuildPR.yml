@@ -75,7 +75,7 @@ jobs:
           ditto -c -k --keepParent "/Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app" "/Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.zip"
           
           echo "Notarize app"
-          xcrun notarytool submit "notarization.zip" --keychain-profile "notarytool-profile" --wait
+          xcrun notarytool submit "/Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.zip" --keychain-profile "notarytool-profile" --wait
           
           echo "Attach staple"
           xcrun stapler staple "/Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app"
