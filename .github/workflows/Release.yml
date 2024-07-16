@@ -149,7 +149,7 @@ jobs:
       - name: Download DLT macOS ARM64 artifacts
         uses: actions/download-artifact@v4
         with:
-          name: DLT-Mac-arm
+          name: DLT-Mac-Arm
       - name: Download DLT Windows parser artifacts
         uses: actions/download-artifact@v4
         with:
