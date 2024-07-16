@@ -30,7 +30,7 @@ jobs:
       - name: Build project
         run: scripts/darwin/build.sh
       - name: Archive artifact
-        run: zip DLT-macOS.zip -r build/dist
+        run: zip DLT-macOS-intel.zip -r build/dist
       - name: Upload DLT artifact
         uses: actions/upload-artifact@v4
         with:
@@ -39,7 +39,7 @@ jobs:
 
   buildMacArm:
     name: Build macOS_arm
-    runs-on: macos-13-xlarge
+    runs-on: macos-14
     strategy:
       matrix:
         xcode: [ Xcode_15.2 ]
@@ -60,7 +60,7 @@ jobs:
       - name: Build project
         run: scripts/darwin/build.sh
       - name: Archive artifact
-        run: zip DLT-macOS.zip -r build/dist
+        run: zip DLT-macOS-arm.zip -r build/dist
       - name: Upload DLT artifact
         uses: actions/upload-artifact@v4
         with:
