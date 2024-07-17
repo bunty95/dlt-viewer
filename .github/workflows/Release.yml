@@ -63,6 +63,7 @@ jobs:
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/PlugIns/styles/*
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/PlugIns/virtualkeyboard/*
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/MacOS/plugins/*
+          /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/MacOS/dlt-commander
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/MacOS/dlt-viewer
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app
 
@@ -147,6 +148,7 @@ jobs:
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/PlugIns/styles/*
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/PlugIns/virtualkeyboard/*
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/MacOS/plugins/*
+          /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/MacOS/dlt-commander
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/MacOS/dlt-viewer
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app
 
