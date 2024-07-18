@@ -37,7 +37,6 @@ jobs:
         run: cmake --version
       - name: Build project
         run: scripts/darwin/build.sh
-
       - name: Codesign app bundle
         # Extract the secrets we defined earlier as environment variables
         env: 
@@ -92,13 +91,13 @@ jobs:
           
           echo "Attach staple"
           xcrun stapler staple "/Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app"
-      - name: Archive artifact 
+      - name: Artifact Creation 
         run: |
+          rm -r /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.zip
           cd /Users/runner/work/dlt-viewer/dlt-viewer/build
           mkdir -p dist
           cp ../scripts/darwin/install.md dist
           tar -czvf "dist/DLTViewer.tgz" -C /Users/runner/work/dlt-viewer/dlt-viewer/build/install .
-          
       - name: Archive artifact
         uses: actions/upload-artifact@v4
         if: ${{ success() }}
