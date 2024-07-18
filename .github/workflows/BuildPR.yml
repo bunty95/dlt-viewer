@@ -94,10 +94,10 @@ jobs:
           xcrun stapler staple "/Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app"
       - name: Archive artifact 
         run: |
-          cd /Users/runner/work/dlt-viewer/dlt-viewer/build/
+          cd /Users/runner/work/dlt-viewer/dlt-viewer/build
           mkdir -p dist
           cp ../scripts/darwin/install.md dist
-          tar -czvf "dist/DLTViewer.tgz"
+          tar -czvf "dist/DLTViewer.tgz" -C /Users/runner/work/dlt-viewer/dlt-viewer/build/install .
           
       - name: Archive artifact
         uses: actions/upload-artifact@v4
