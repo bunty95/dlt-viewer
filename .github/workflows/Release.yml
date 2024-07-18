@@ -85,6 +85,13 @@ jobs:
           echo "Attach staple"
           xcrun stapler staple "/Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app"
 
+      - name: Artifact Creation 
+        run: |
+          rm -r /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.zip
+          cd /Users/runner/work/dlt-viewer/dlt-viewer/build
+          mkdir -p dist
+          cp ../scripts/darwin/install.md dist
+          tar -czvf "dist/DLTViewer.tgz" -C /Users/runner/work/dlt-viewer/dlt-viewer/build/install .
       - name: Archive artifact
         run: zip DLT-macOS-intel.zip -r build/dist
       - name: Upload DLT artifact
@@ -170,6 +177,13 @@ jobs:
           echo "Attach staple"
           xcrun stapler staple "/Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app"
         
+      - name: Artifact Creation 
+        run: |
+          rm -r /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.zip
+          cd /Users/runner/work/dlt-viewer/dlt-viewer/build
+          mkdir -p dist
+          cp ../scripts/darwin/install.md dist
+          tar -czvf "dist/DLTViewer.tgz" -C /Users/runner/work/dlt-viewer/dlt-viewer/build/install .     
       - name: Archive artifact
         run: zip DLT-macOS-arm64.zip -r build/dist
       - name: Upload DLT artifact
