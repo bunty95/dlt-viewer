@@ -90,9 +90,10 @@ jobs:
           
       #     echo "Attach staple"
       #     xcrun stapler staple "/Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app"
+      #     rm -r /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.zip
+
       - name: Artifact Creation 
         run: |
-          rm -r /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.zip
           cd /Users/runner/work/dlt-viewer/dlt-viewer/build
           mkdir -p dist
           cp ../scripts/darwin/install.md dist
