@@ -15,10 +15,10 @@
 # 01.Oct.2016, Jack Smith <jack.smith@elektrobit.com>, Original Author
 
 cmake_minimum_required (VERSION 3.15)
-# implicitly calls version checks
+# implicitly calls version checks ##  set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "" FORCE) 
+
 include(scripts/windows/version.cmake)
 include(scripts/linux/version.cmake)
-set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "" FORCE)
 
 project(dlt-viewer
     VERSION ${DLT_PROJECT_VERSION_MAJOR}.${DLT_PROJECT_VERSION_MINOR}.${DLT_PROJECT_VERSION_PATCH}
