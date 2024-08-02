@@ -65,6 +65,7 @@ cpack -G External
 cd "${BUILD_DIR}"
 FULL_VERSION=$(cat "${BUILD_DIR}/full_version.txt")
 echo "FULL_VERSION=${FULL_VERSION}"
+cp ../scripts/darwin/dltviewer.entitlements /Users/runner/work/dlt-viewer/dlt-viewer/build/install
 
 #mkdir -p dist
 #cp ../scripts/darwin/install.md dist
