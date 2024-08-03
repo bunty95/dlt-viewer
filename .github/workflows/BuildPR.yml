@@ -94,6 +94,7 @@ jobs:
       - name: Artifact Creation 
         run: |
           rm -r /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.zip
+          rm -r /Users/runner/work/dlt-viewer/dlt-viewer/build/install/dltviewer.entitlements
           cd /Users/runner/work/dlt-viewer/dlt-viewer/build
           mkdir -p dist
           cp ../scripts/darwin/install.md dist
