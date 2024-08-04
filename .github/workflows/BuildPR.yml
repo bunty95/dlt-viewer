@@ -68,6 +68,25 @@ jobs:
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app
           /usr/bin/codesign --verbose=4 --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" --deep --force /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app --entitlements /Users/runner/work/dlt-viewer/dlt-viewer/build/install/dltviewer.entitlements
 
+
+          # /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/Frameworks/*
+          # /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/Resources/*
+          # /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/PlugIns/bearer/*
+          # /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents//PlugIns/iconengines/*
+          # /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/PlugIns/imageformats/*
+          # /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/PlugIns/platforminputcontexts/*
+          # /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/PlugIns/platforms/*
+          # /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/PlugIns/printsupport/*
+          # /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/PlugIns/styles/*
+          # /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/PlugIns/virtualkeyboard/*
+          # /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/MacOS/plugins/*
+          # /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/MacOS/dlt-commander
+          # /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/MacOS/dlt-viewer --entitlements /Users/runner/work/dlt-viewer/dlt-viewer/build/install/dltviewer.entitlements
+          # /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app
+          # /usr/bin/codesign --verbose=4 --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" --deep --force /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app --entitlements /Users/runner/work/dlt-viewer/dlt-viewer/build/install/dltviewer.entitlements
+
+
+
       - name: Notarize app bundle
         env:
           PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.APPLE_ID }}
