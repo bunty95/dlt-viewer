@@ -60,6 +60,7 @@ jobs:
       
           # We finally codesign our app bundle, specifying the Hardened runtime option
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/Resources/*
+          /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/MacOS/plugins/*
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/MacOS/dlt-commander  --entitlements /Users/runner/work/dlt-viewer/dlt-viewer/build/install/dltviewer.entitlements
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/MacOS/dlt-viewer --entitlements /Users/runner/work/dlt-viewer/dlt-viewer/build/install/dltviewer.entitlements
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app
