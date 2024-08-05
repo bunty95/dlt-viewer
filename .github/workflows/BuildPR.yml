@@ -57,6 +57,8 @@ jobs:
           security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
           security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+          cp "/Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app" "/Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer_original.zip"
+
       
           # We finally codesign our app bundle, specifying the Hardened runtime option
           /usr/bin/codesign --timestamp --options=runtime -s "$MACOS_CERTIFICATE_NAME" -f -v /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app/Contents/Frameworks/* --entitlements /Users/runner/work/dlt-viewer/dlt-viewer/build/install/dltviewer.entitlements
