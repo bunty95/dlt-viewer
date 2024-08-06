@@ -90,7 +90,6 @@ jobs:
           echo "Attach staple"
           xcrun stapler staple "/Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.app"
           rm -r /Users/runner/work/dlt-viewer/dlt-viewer/build/install/DLTViewer.zip
-          rm -r /Users/runner/work/dlt-viewer/dlt-viewer/build/install/dltviewer.entitlements
       - name: Artifact Creation 
         run: |
           cd /Users/runner/work/dlt-viewer/dlt-viewer/build
