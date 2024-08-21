@@ -14,5 +14,9 @@
 	<true/>
 	<key>com.apple.security.device.usb</key>
 	<true/>
+	<key>com.apple.application-identifier</key>
+	<string>LKR74R79X2.dhillonengineering.dlt-viewer.com<string/>
+	<key>com.apple.developer.team-identifier</key>
+	<string>LKR74R79X2</string>
 </dict>
 </plist>
