@@ -15,9 +15,9 @@ jobs:
       matrix:
         macos: [ macos-13 ]
         xcode: [ Xcode ]
-        # include:
-        #   - macos: macos-14
-        #     xcode: Xcode
+        include:
+          - macos: macos-14
+            xcode: Xcode
     steps:
       - name: Checkout
         uses: actions/checkout@v4
