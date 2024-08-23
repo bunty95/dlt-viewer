@@ -25,9 +25,9 @@
 /* for other bugfixes and not major feature enhancement just use patch level */
 #define PACKAGE_VERSION_STATE "unstable"
 #define PACKAGE_MAJOR_VERSION 2
-#define PACKAGE_MINOR_VERSION 27
-#define PACKAGE_PATCH_LEVEL 2
-#define PACKAGE_VERSION "2.27.2"
+#define PACKAGE_MINOR_VERSION 26
+#define PACKAGE_PATCH_LEVEL 001
+#define PACKAGE_VERSION "2.26.001"
 #define PACKAGE_REVISION "unstable"
 #define PACKAGE_DESCRIPTION "DLT Viewer"
 #define DLT_SUPPORT_MAIL_ADDRESS ""
