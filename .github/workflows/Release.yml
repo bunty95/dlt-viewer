@@ -12,9 +12,9 @@ jobs:
     runs-on: ${{ matrix.macos }}
     strategy:
       matrix:
-        xcode: [ Xcode_15.2 ]
-        abi: [ x86 ]
         macos: [ macos-13 ]
+        abi: [ x86 ]
+        xcode: [ Xcode_15.2 ]
         include:
           - macos: macos-14
             abi: arm64
