@@ -69,8 +69,7 @@ endif()
 
 set_target_properties(dlt-viewer PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
-    INSTALL_RPATH "$<$<BOOL:${LINUX}>:$ORIGIN/../lib;>$<$<BOOL:${APPLE}>:@loader_path/../Frameworks;>$<$<BOOL:${DLT_USE_QT_RPATH}>:${DLT_QT_LIB_DIR}>"
-    MACOSX_BUNDLE TRUE)
+    INSTALL_RPATH "$<$<BOOL:${LINUX}>:$ORIGIN/../lib;>$<$<BOOL:${APPLE}>:@loader_path/../Frameworks;>$<$<BOOL:${DLT_USE_QT_RPATH}>:${DLT_QT_LIB_DIR}>")
 
     install(TARGETS dlt-viewer
     DESTINATION "${DLT_EXECUTABLE_INSTALLATION_PATH}"
