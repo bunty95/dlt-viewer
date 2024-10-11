@@ -6,7 +6,16 @@ endif()
 set(CPACK_GENERATOR External)
 
 get_target_property(MOC_LOCATION ${QT_PREFIX}::moc LOCATION)
-get_filename_component(MACDEPLOYQT_EXECUTABLE ${MOC_LOCATION}/../macdeployqt ABSOLUTE)
+
+#sets the correct macdeployqt for qt6
+if (CMAKE_SYSTEM_PROCESSOR MATCHES "^arm")
+  set(MACDEPLOYQT_EXECUTABLE "/opt/homebrew/opt/qt@6/bin/macdeployqt")
+else()
+  set(MACDEPLOYQT_EXECUTABLE "/usr/local/bin/macdeployqt")
+endif()
+
+# get_filename_component(MACDEPLOYQT_EXECUTABLE ${MOC_LOCATION}/../macdeployqt ABSOLUTE)
+
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/scripts/darwin/macdeployqt.cmake.in" "${CMAKE_BINARY_DIR}/macdeployqt.cmake" @ONLY)
 
 set(CPACK_EXTERNAL_PACKAGE_SCRIPT "${CMAKE_BINARY_DIR}/macdeployqt.cmake")
