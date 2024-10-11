@@ -14,8 +14,6 @@
 
 if("${QT_PREFIX}" STREQUAL "Qt6")
     QT6_ADD_RESOURCES(UI_RESOURCES_RCC resources/resource.qrc)
-else()
-    QT5_ADD_RESOURCES(UI_RESOURCES_RCC resources/resource.qrc)
 endif()
 
 add_executable(dlt-viewer
@@ -54,12 +52,7 @@ add_executable(dlt-viewer
     resources/dlt_viewer.rc
     )
 
-target_link_libraries(dlt-viewer
-    qdlt
-    ${QT_PREFIX}::Core
-    ${QT_PREFIX}::Network
-    ${QT_PREFIX}::Widgets
-    ${QT_PREFIX}::SerialPort)
+target_link_libraries(dlt-viewer qdlt Qt6::Core Qt6::Network Qt6::Widgets Qt6::SerialPort)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     # https://stackoverflow.com/questions/45329372/ubuntu-recognizes-executable-as-shared-library-and-wont-run-it-by-clicking
