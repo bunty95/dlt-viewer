@@ -16,8 +16,9 @@ if("${QT_PREFIX}" STREQUAL "Qt6")
     QT6_ADD_RESOURCES(UI_RESOURCES_RCC resources/resource.qrc)
 endif()
 
+find_package(Qt6 REQUIRED COMPONENTS Core)
+
 add_executable(dlt-viewer
-    macdeployqt
     main.cpp
     mainwindow.cpp
     project.cpp
