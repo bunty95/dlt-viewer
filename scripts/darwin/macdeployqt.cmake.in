@@ -30,7 +30,7 @@ message(STATUS "Call ${MACDEPLOYQT_EXECUTABLE} ${DLT_APP_DIR_NAME} ${DLT_PLUGINS
 execute_process(COMMAND
     "${MACDEPLOYQT_EXECUTABLE}"
     "${DLT_APP_DIR_NAME}"
-    -verbose=2
+    -verbose=1
     -always-overwrite
     -dmg
     -libpath=${CMAKE_INSTALL_PREFIX}/${DLT_APP_DIR_NAME}/Contents/Frameworks
