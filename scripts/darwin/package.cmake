@@ -9,9 +9,9 @@ get_target_property(MOC_LOCATION ${QT_PREFIX}::moc LOCATION)
 
 #sets the correct macdeployqt for qt6
 if (CMAKE_SYSTEM_PROCESSOR MATCHES "^arm")
-  set(MACDEPLOYQT_EXECUTABLE "/opt/homebrew/opt/qt@6/bin/macdeployqt")
+  set(MACDEPLOYQT_EXECUTABLE "/opt/homebrew/opt/qt@6/bin/macdeployqt6")
 else()
-  set(MACDEPLOYQT_EXECUTABLE "/usr/local/bin/macdeployqt")
+  set(MACDEPLOYQT_EXECUTABLE "/usr/local/bin/macdeployqt6")
 endif()
 
 # get_filename_component(MACDEPLOYQT_EXECUTABLE ${MOC_LOCATION}/../macdeployqt ABSOLUTE)
