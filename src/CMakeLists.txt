@@ -55,7 +55,7 @@ qt_add_executable(dlt-viewer
     resources/dlt_viewer.rc
     )
 
-target_link_libraries(dlt-viewer qdlt PRIVATE Qt::Core Qt::Network Qt::Widgets Qt::SerialPort Qt::VirtualKeyboard Qt::Gui)
+target_link_libraries(dlt-viewer PRIVATE qdlt Qt::Core Qt::Network Qt::Widgets Qt::SerialPort Qt::VirtualKeyboard Qt::Gui)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     # https://stackoverflow.com/questions/45329372/ubuntu-recognizes-executable-as-shared-library-and-wont-run-it-by-clicking
