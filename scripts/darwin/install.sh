@@ -4,8 +4,8 @@ id
 env
 pwd
 
-brew update
-brew install qt
+brew upgrade
+brew install qt --HEAD
 brew unlink qt && brew link --force qt
 #brew link --overwrite qt@5 --force --overwrite
 # https://github.com/Homebrew/homebrew-core/issues/8392
