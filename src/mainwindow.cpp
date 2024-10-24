@@ -280,7 +280,6 @@ MainWindow::~MainWindow()
     delete sortProxyModel;
 }
 
-
 void MainWindow::initState()
 {
     /* Settings */
@@ -741,6 +740,14 @@ void MainWindow::initFileHandling()
     if(!QDltOptManager::getInstance()->getFilterFiles().isEmpty())
     {
         qDebug() << "### Load filter";
+
+        // enable filters if they are not enabled
+        if(QDltSettingsManager::getInstance()->value("startup/filtersEnabled", true).toBool()==false)
+        {
+            qDebug("Enable filters, as they were disabled and at least one filter is provided by the commandline!");
+            QDltSettingsManager::getInstance()->setValue("startup/filtersEnabled", true);
+        }
+
         for ( const auto& filter : QDltOptManager::getInstance()->getFilterFiles() )
         {
             qDebug() << "Load filter:" << filter;
@@ -5718,7 +5725,6 @@ void MainWindow::on_action_menuHelp_Info_triggered()
                          #endif
                              QString("(C) 2016,2024 BMW AG\n"));
 }
-
 
 void MainWindow::on_action_menuHelp_Command_Line_triggered() {
     QMessageBox::information(
