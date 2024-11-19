@@ -609,6 +609,9 @@ public slots:
     void onAddActionToHistory();
     void onSearchProgressChanged(bool isInProgress);
 
+    void handleImportResults(const QString &);
+    void handleExportResults(const QString &);
+
 public:
 
     /* Project configuration containing ECU/APP/Context/Filter/Plugin configuration */

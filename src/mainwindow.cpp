@@ -841,9 +841,11 @@ void MainWindow::initFileHandling()
     if(!QDltOptManager::getInstance()->getPcapFiles().isEmpty())
     {
         qDebug() << "### Import PCAP files";
-        QDltImporter importer;
         for ( const auto& filename : QDltOptManager::getInstance()->getPcapFiles() )
-            importer.dltIpcFromPCAP(outputfile,filename,this,QDltOptManager::getInstance()->issilentMode());
+        {
+            QDltImporter importer(&outputfile);
+            importer.dltIpcFromPCAP(filename);
+        }
         if(QDltOptManager::getInstance()->isCommandlineMode())
             // if dlt viewer started as converter or with plugin option load file non multithreaded
             reloadLogFile(false,false);
@@ -856,9 +858,11 @@ void MainWindow::initFileHandling()
     if(!QDltOptManager::getInstance()->getMf4Files().isEmpty())
     {
         qDebug() << "### Import MF4 files";
-        QDltImporter importer;
         for ( const auto& filename : QDltOptManager::getInstance()->getMf4Files() )
-            importer.dltIpcFromMF4(outputfile,filename,this,QDltOptManager::getInstance()->issilentMode());
+        {
+            QDltImporter importer(&outputfile);
+            importer.dltIpcFromMF4(filename);
+        }
         if(QDltOptManager::getInstance()->isCommandlineMode())
             // if dlt viewer started as converter or with plugin option load file non multithreaded
             reloadLogFile(false,false);
@@ -871,69 +875,58 @@ void MainWindow::initFileHandling()
 
 void MainWindow::commandLineConvertToDLT()
 {
-    QFile dltFile(QDltOptManager::getInstance()->getConvertDestFile());
-
     qDebug() << "### Convert to DLT";
 
     /* start exporter */
-    QDltExporter exporter(project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
-    qDebug() << "Commandline DLT convert to " << dltFile.fileName();
-     //exporter.exportMessages(&qfile,&asciiFile,&pluginManager,QDltExporter::FormatAsciiQ,QDltExporter::SelectionFiltered);
-    exporter.exportMessages(&qfile,&dltFile,&pluginManager,QDltExporter::FormatDlt,QDltExporter::SelectionFiltered);
+    QDltExporter exporter(&qfile,QDltOptManager::getInstance()->getConvertDestFile(),&pluginManager,QDltExporter::FormatDlt,QDltExporter::SelectionFiltered,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
+    qDebug() << "Commandline DLT convert to " << QDltOptManager::getInstance()->getConvertDestFile();
+    exporter.exportMessages();
     qDebug() << "DLT export to DLT file format done";
 }
 
 
 void MainWindow::commandLineConvertToASCII()
 {
-    QFile asciiFile(QDltOptManager::getInstance()->getConvertDestFile());
-
     qDebug() << "### Convert to ASCII";
 
     /* start exporter */
-    QDltExporter exporter(project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
-    qDebug() << "Commandline ASCII convert to " << asciiFile.fileName();
-    exporter.exportMessages(&qfile,&asciiFile,&pluginManager,QDltExporter::FormatAscii,QDltExporter::SelectionFiltered);
+    QDltExporter exporter(&qfile,QDltOptManager::getInstance()->getConvertDestFile(),&pluginManager,QDltExporter::FormatAscii,QDltExporter::SelectionFiltered,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
+    qDebug() << "Commandline ASCII convert to " << QDltOptManager::getInstance()->getConvertDestFile();
+    exporter.exportMessages();
     qDebug() << "DLT export ASCII done";
 }
 
 void MainWindow::commandLineConvertToCSV()
 {
-    QFile asciiFile(QDltOptManager::getInstance()->getConvertDestFile());
-
     qDebug() << "### Convert to CSV";
 
     /* start exporter */
-    QDltExporter exporter(project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
-    qDebug() << "Commandline ASCII convert to " << asciiFile.fileName();
-    exporter.exportMessages(&qfile,&asciiFile,&pluginManager,QDltExporter::FormatCsv,QDltExporter::SelectionFiltered);
+    QDltExporter exporter(&qfile,QDltOptManager::getInstance()->getConvertDestFile(),&pluginManager,QDltExporter::FormatCsv,QDltExporter::SelectionFiltered,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
+    qDebug() << "Commandline ASCII convert to " << QDltOptManager::getInstance()->getConvertDestFile();
+    exporter.exportMessages();
     qDebug() << "DLT export CSV done";
 }
 
 
 void MainWindow::commandLineConvertToUTF8()
 {
-    QFile asciiFile(QDltOptManager::getInstance()->getConvertDestFile());
-
     /* start exporter */
     qDebug() << "### Convert to UTF8";
 
-    QDltExporter exporter(project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
-    qDebug() << "Commandline UTF8 convert to " << asciiFile.fileName();
-    exporter.exportMessages(&qfile,&asciiFile,&pluginManager,QDltExporter::FormatUTF8,QDltExporter::SelectionFiltered);
+    QDltExporter exporter(&qfile,QDltOptManager::getInstance()->getConvertDestFile(),&pluginManager,QDltExporter::FormatUTF8,QDltExporter::SelectionFiltered,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
+    qDebug() << "Commandline UTF8 convert to " << QDltOptManager::getInstance()->getConvertDestFile();
+    exporter.exportMessages();
     qDebug() << "DLT export UTF8 done";
 }
 
 void MainWindow::commandLineConvertToDLTDecoded()
 {
-    QFile dltFile(QDltOptManager::getInstance()->getConvertDestFile());
-
     qDebug() << "### Convert to DLT Decoded";
 
     /* start exporter */
-    QDltExporter exporter(project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
-    qDebug() << "Commandline decoding to dlt formated file" << dltFile.fileName();
-    exporter.exportMessages(&qfile,&dltFile,&pluginManager,QDltExporter::FormatDltDecoded,QDltExporter::SelectionFiltered);
+    QDltExporter exporter(&qfile,QDltOptManager::getInstance()->getConvertDestFile(),&pluginManager,QDltExporter::FormatDltDecoded,QDltExporter::SelectionFiltered,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
+    qDebug() << "Commandline decoding to dlt formated file" << QDltOptManager::getInstance()->getConvertDestFile();
+    exporter.exportMessages();
     qDebug() << "DLT export DLT decoded done";
 }
 
@@ -1126,7 +1119,6 @@ void MainWindow::on_action_menuFile_Open_triggered()
     /* change DLT file working directory */
     workingDirectory.setDltDirectory(QFileInfo(fileNames[0]).absolutePath());
 
-    QDltImporter importer;
     QStringList dltFileNames,pcapFileNames,mf4FileNames;
 
     for ( const auto& i : fileNames )
@@ -1146,24 +1138,22 @@ void MainWindow::on_action_menuFile_Open_triggered()
     else if(dltFileNames.isEmpty()&&!pcapFileNames.isEmpty()&&mf4FileNames.isEmpty())
     {
         on_action_menuFile_Clear_triggered();
-        for ( const auto& i : pcapFileNames )
-        {
-            connect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-            importer.dltIpcFromPCAP(outputfile,i,this,false);
-            disconnect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-        }
-        reloadLogFile();
+        QDltImporter *importerThread = new QDltImporter(&outputfile,pcapFileNames);
+        connect(importerThread, &QDltImporter::progress,    this, &MainWindow::progress);
+        connect(importerThread, &QDltImporter::resultReady, this, &MainWindow::handleImportResults);
+        connect(importerThread, &QDltImporter::finished,    importerThread, &QObject::deleteLater);
+        statusProgressBar->show();
+        importerThread->start();
     }
     else if(dltFileNames.isEmpty()&&pcapFileNames.isEmpty()&&!mf4FileNames.isEmpty())
     {
         on_action_menuFile_Clear_triggered();
-        for ( const auto& i : mf4FileNames )
-        {
-            connect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-            importer.dltIpcFromMF4(outputfile,i,this,false);
-            disconnect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-        }
-        reloadLogFile();
+        QDltImporter *importerThread = new QDltImporter(&outputfile,mf4FileNames);
+        connect(importerThread, &QDltImporter::progress,    this, &MainWindow::progress);
+        connect(importerThread, &QDltImporter::resultReady, this, &MainWindow::handleImportResults);
+        connect(importerThread, &QDltImporter::finished,    importerThread, &QObject::deleteLater);
+        statusProgressBar->show();
+        importerThread->start();
     }
     else
     {
@@ -1505,27 +1495,25 @@ void MainWindow::on_actionAppend_triggered()
     /* change DLT file working directory */
     workingDirectory.setDltDirectory(QFileInfo(fileNames[0]).absolutePath());
 
-    QDltImporter importer;
-
+    QStringList importFilenames;
     for ( const auto& i : fileNames )
     {
         if(i.endsWith(".dlt",Qt::CaseInsensitive))
             appendDltFile(i);
         else if(i.endsWith(".pcap",Qt::CaseInsensitive))
-        {
-            connect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-            importer.dltIpcFromPCAP(outputfile,i,this,false);
-            disconnect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-        }
+            importFilenames.append(i);
         else if(i.endsWith(".mf4",Qt::CaseInsensitive))
-        {
-            connect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-            importer.dltIpcFromMF4(outputfile,i,this,false);
-            disconnect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-        }
+            importFilenames.append(i);
     }
-
-    reloadLogFile();
+    if(!importFilenames.isEmpty())
+    {
+        QDltImporter *importerThread = new QDltImporter(&outputfile,importFilenames);
+        connect(importerThread, &QDltImporter::progress,    this, &MainWindow::progress);
+        connect(importerThread, &QDltImporter::resultReady, this, &MainWindow::handleImportResults);
+        connect(importerThread, &QDltImporter::finished,    importerThread, &QObject::deleteLater);
+        statusProgressBar->show();
+        importerThread->start();
+    }
 }
 
 void MainWindow::mark_unmark_lines()
@@ -1571,9 +1559,9 @@ void MainWindow::exportSelection(bool ascii = true,bool file = false,QDltExporte
 
     filterUpdate(); // update filters of qfile before starting Exporting for RegEx operation
 
-    QDltExporter exporter(project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
+    QDltExporter exporter(&qfile,"",&pluginManager,format,QDltExporter::SelectionSelected,&list,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
     connect(&exporter,SIGNAL(clipboard(QString)),this,SLOT(clipboard(QString)));
-    exporter.exportMessages(&qfile,0,&pluginManager,format,QDltExporter::SelectionSelected,&list);
+    exporter.exportMessages();
     disconnect(&exporter,SIGNAL(clipboard(QString)),this,SLOT(clipboard(QString)));
 }
 
@@ -1609,9 +1597,9 @@ void MainWindow::exportSelection_searchTable(QDltExporter::DltExportFormat forma
 
     filterUpdate(); // update filters of qfile before starting Exporting for RegEx operation
 
-    QDltExporter exporter(project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
+    QDltExporter exporter(&qfile,"",&pluginManager,format,QDltExporter::SelectionSelected,&finallist,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
     connect(&exporter,SIGNAL(clipboard(QString)),this,SLOT(clipboard(QString)));
-    exporter.exportMessages(&qfile,0,&pluginManager,format,QDltExporter::SelectionSelected,&finallist);
+    exporter.exportMessages();
     disconnect(&exporter,SIGNAL(clipboard(QString)),this,SLOT(clipboard(QString)));
 }
 
@@ -1709,27 +1697,27 @@ void MainWindow::on_actionExport_triggered()
 
     /* change last export directory */
     workingDirectory.setExportDirectory(QFileInfo(fileName).absolutePath());
-    QDltExporter exporter(project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter(),this);
-    QFile outfile(fileName);
+    QDltExporter *exporterThread;
 
     unsigned long int startix, stopix;
     exporterDialog.getRange(&startix,&stopix);
 
     filterUpdate(); // update filters of qfile before starting Exporting for RegEx operation
 
-    connect(&exporter,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
     if(exportSelection == QDltExporter::SelectionSelected) // marked messages
     {
-        //qDebug() << "Selection" << __LINE__;
-        exporter.exportMessages(&qfile, &outfile, &pluginManager,exportFormat,exportSelection,&list);
+        exporterThread = new QDltExporter(&qfile, fileName, &pluginManager,exportFormat,exportSelection,&list,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter(),this);
     }
     else
     {
-        //qDebug() << "No selection" << __LINE__;
-        exporter.exportMessageRange(startix,stopix);
-        exporter.exportMessages(&qfile, &outfile, &pluginManager,exportFormat,exportSelection);
+        exporterThread = new QDltExporter(&qfile, fileName, &pluginManager,exportFormat,exportSelection,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter(),this);
+        exporterThread->exportMessageRange(startix,stopix);
     }
-    disconnect(&exporter,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
+    connect(exporterThread, &QDltExporter::progress,    this, &MainWindow::progress);
+    connect(exporterThread, &QDltExporter::resultReady, this, &MainWindow::handleExportResults);
+    connect(exporterThread, &QDltExporter::finished,    exporterThread, &QObject::deleteLater);
+    statusProgressBar->show();
+    exporterThread->start();
 }
 
 void MainWindow::on_action_menuFile_SaveAs_triggered()
@@ -1879,7 +1867,7 @@ void MainWindow::on_action_menuFile_Clear_triggered()
         openFileNames = QStringList(fn);
         isDltFileReadOnly = false;
         statusFilename->setMinimumWidth(statusFilename->width()); // just works to show default tmp file + location in status line
-        reloadLogFile();
+        reloadLogFile(false,false);
         outputfile.close(); // open later again when writing
     }
     else
@@ -7296,26 +7284,22 @@ void MainWindow::on_exploreView_customContextMenuRequested(QPoint pos)
                 else if(dltFileNames.isEmpty()&&!pcapFileNames.isEmpty()&&mf4FileNames.isEmpty()&&dlfFileNames.isEmpty())
                 {
                     on_action_menuFile_Clear_triggered();
-                    for ( const auto& i : pcapFileNames )
-                    {
-                        QDltImporter importer;
-                        connect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                        importer.dltIpcFromPCAP(outputfile,i,this,false);
-                        disconnect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                    }
-                    reloadLogFile();
+                    QDltImporter *importerThread = new QDltImporter(&outputfile,pcapFileNames);
+                    connect(importerThread, &QDltImporter::progress,    this, &MainWindow::progress);
+                    connect(importerThread, &QDltImporter::resultReady, this, &MainWindow::handleImportResults);
+                    connect(importerThread, &QDltImporter::finished,    importerThread, &QObject::deleteLater);
+                    statusProgressBar->show();
+                    importerThread->start();
                 }
                 else if(dltFileNames.isEmpty()&&pcapFileNames.isEmpty()&&!mf4FileNames.isEmpty()&&dlfFileNames.isEmpty())
                 {
                     on_action_menuFile_Clear_triggered();
-                    for ( const auto& i : mf4FileNames )
-                    {
-                        QDltImporter importer;
-                        connect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                        importer.dltIpcFromMF4(outputfile,i,this,false);
-                        disconnect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                    }
-                    reloadLogFile();
+                    QDltImporter *importerThread = new QDltImporter(&outputfile,mf4FileNames);
+                    connect(importerThread, &QDltImporter::progress,    this, &MainWindow::progress);
+                    connect(importerThread, &QDltImporter::resultReady, this, &MainWindow::handleImportResults);
+                    connect(importerThread, &QDltImporter::finished,    importerThread, &QObject::deleteLater);
+                    statusProgressBar->show();
+                    importerThread->start();
                 }
                 else if(dltFileNames.isEmpty()&&pcapFileNames.isEmpty()&&mf4FileNames.isEmpty()&&!dlfFileNames.isEmpty())
                 {
@@ -7345,7 +7329,7 @@ void MainWindow::on_exploreView_customContextMenuRequested(QPoint pos)
             connect(action, &QAction::triggered, this, [this, indexes](){
                 QStringList  pathsList;
                 auto selectedIndexes = indexes;
-                QDltImporter importer;
+                QStringList importFilenames;
                 for (auto &index : selectedIndexes)
                 {
                    if (0 == index.column())
@@ -7354,22 +7338,22 @@ void MainWindow::on_exploreView_customContextMenuRequested(QPoint pos)
                        if(i.endsWith(".dlt",Qt::CaseInsensitive))
                            appendDltFile(i);
                        else if(i.endsWith(".pcap",Qt::CaseInsensitive))
-                       {
-                           connect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                           importer.dltIpcFromPCAP(outputfile,i,this,false);
-                           disconnect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                       }
+                           importFilenames.append(i);
                        else if(i.endsWith(".mf4",Qt::CaseInsensitive))
-                       {
-                           connect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                           importer.dltIpcFromMF4(outputfile,i,this,false);
-                           disconnect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                       }
+                           importFilenames.append(i);
                        else if(i.endsWith(".dlf",Qt::CaseInsensitive))
                            openDlfFile(i,false);
                    }
                 }
-                reloadLogFile();
+                if(!importFilenames.isEmpty())
+                {
+                    QDltImporter *importerThread = new QDltImporter(&outputfile,importFilenames);
+                    connect(importerThread, &QDltImporter::progress,    this, &MainWindow::progress);
+                    connect(importerThread, &QDltImporter::resultReady, this, &MainWindow::handleImportResults);
+                    connect(importerThread, &QDltImporter::finished,    importerThread, &QObject::deleteLater);
+                    statusProgressBar->show();
+                    importerThread->start();
+                }
             });
             menu.addAction(action);
 
@@ -7420,24 +7404,24 @@ void MainWindow::on_exploreView_customContextMenuRequested(QPoint pos)
                 QStringList  files;
                 QDirIterator it_sh(path, QStringList() << "*.pcap" << "*.mf4", QDir::Files, QDirIterator::Subdirectories);
 
-                QDltImporter importer;
+                QStringList importFilenames;
                 while (it_sh.hasNext())
                 {
                     QString i = it_sh.next();
                     if (i.endsWith(".pcap",Qt::CaseInsensitive))
-                    {
-                        connect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                        importer.dltIpcFromPCAP(outputfile,i,this,false);
-                        disconnect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                    }
+                        importFilenames.append(i);
                     else if (i.endsWith(".mf4",Qt::CaseInsensitive))
-                    {
-                        connect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                        importer.dltIpcFromMF4(outputfile,i,this,false);
-                        disconnect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                    }
+                        importFilenames.append(i);
                 }
-                reloadLogFile();
+                if(!importFilenames.isEmpty())
+                {
+                    QDltImporter *importerThread = new QDltImporter(&outputfile,importFilenames);
+                    connect(importerThread, &QDltImporter::progress,    this, &MainWindow::progress);
+                    connect(importerThread, &QDltImporter::resultReady, this, &MainWindow::handleImportResults);
+                    connect(importerThread, &QDltImporter::finished,    importerThread, &QObject::deleteLater);
+                    statusProgressBar->show();
+                    importerThread->start();
+                }
 
             });
             menu.addAction(action);
@@ -7615,6 +7599,7 @@ void MainWindow::dropEvent(QDropEvent *event)
 
     if (event->mimeData()->hasUrls())
     {
+        QStringList importFilenames;
         for(int num = 0;num<event->mimeData()->urls().size();num++)
         {
             QUrl url = event->mimeData()->urls()[num];
@@ -7636,23 +7621,9 @@ void MainWindow::dropEvent(QDropEvent *event)
                 openDlfFile(filename,true);
             }
             else if(filename.endsWith(".pcap", Qt::CaseInsensitive))
-            {
-                /* Filter file dropped */
-                QDltImporter importer;
-                connect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                importer.dltIpcFromPCAP(outputfile,filename,this,false);
-                disconnect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                reloadLogFile();
-            }
+                importFilenames.append(filename);
             else if(filename.endsWith(".mf4", Qt::CaseInsensitive))
-            {
-                /* Filter file dropped */
-                QDltImporter importer;
-                connect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                importer.dltIpcFromMF4(outputfile,filename,this,false);
-                disconnect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-                reloadLogFile();
-            }
+                importFilenames.append(filename);
             else
             {
                 /* ask for active decoder plugin to load configuration */
@@ -7710,6 +7681,15 @@ void MainWindow::dropEvent(QDropEvent *event)
                     }
                 }
             }
+        }
+        if(!importFilenames.isEmpty())
+        {
+            QDltImporter *importerThread = new QDltImporter(&outputfile,importFilenames);
+            connect(importerThread, &QDltImporter::progress,    this, &MainWindow::progress);
+            connect(importerThread, &QDltImporter::resultReady, this, &MainWindow::handleImportResults);
+            connect(importerThread, &QDltImporter::finished,    importerThread, &QObject::deleteLater);
+            statusProgressBar->show();
+            importerThread->start();
         }
         if(!filenames.isEmpty())
         {
@@ -8476,7 +8456,6 @@ void MainWindow::on_exploreView_activated(const QModelIndex &index)
 
     auto result = std::find_if(ext.begin(), ext.end(),
                                 [&path](const QString &el){return path.toLower().endsWith(el);});
-    QDltImporter importer;
     switch(result - ext.begin())
     {
     case 0: /* this represents index in "ext" list */
@@ -8490,16 +8469,24 @@ void MainWindow::on_exploreView_activated(const QModelIndex &index)
         openDlpFile(path);
         break;
     case 3:
-        connect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-        importer.dltIpcFromPCAP(outputfile,path,this,false);
-        disconnect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-        reloadLogFile();
+        {
+        QDltImporter *importerThread = new QDltImporter(&outputfile,path);
+        connect(importerThread, &QDltImporter::progress,    this, &MainWindow::progress);
+        connect(importerThread, &QDltImporter::resultReady, this, &MainWindow::handleImportResults);
+        connect(importerThread, &QDltImporter::finished,    importerThread, &QObject::deleteLater);
+        statusProgressBar->show();
+        importerThread->start();
+        }
         break;
     case 4:
-        connect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-        importer.dltIpcFromMF4(outputfile,path,this,false);
-        disconnect(&importer,SIGNAL(progress(QString,int,int)),this,SLOT(progress(QString,int,int)));
-        reloadLogFile();
+        {
+        QDltImporter *importerThread = new QDltImporter(&outputfile,path);
+        connect(importerThread, &QDltImporter::progress,    this, &MainWindow::progress);
+        connect(importerThread, &QDltImporter::resultReady, this, &MainWindow::handleImportResults);
+        connect(importerThread, &QDltImporter::finished,    importerThread, &QObject::deleteLater);
+        statusProgressBar->show();
+        importerThread->start();
+        }
         break;
     default:
         break;
@@ -8554,3 +8541,13 @@ void MainWindow::on_lineEditFilterEnd_textChanged(const QString &arg1)
     applyConfigEnabled(true);
 }
 
+void MainWindow::handleImportResults(const QString &)
+{
+    statusProgressBar->hide();
+    reloadLogFile();
+}
+
+void MainWindow::handleExportResults(const QString &)
+{
+    statusProgressBar->hide();
+}
