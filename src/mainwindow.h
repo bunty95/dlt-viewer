@@ -41,6 +41,7 @@
 #include "searchtablemodel.h"
 #include "sortfilterproxymodel.h"
 #include "ui_mainwindow.h"
+#include "searchform.h"
 
 
 /**
@@ -148,6 +149,7 @@ private:
     SearchDialog *searchDlg;
     QShortcut *m_shortcut_searchnext;
     QShortcut *m_shortcut_searchprev;
+    SearchForm* searchInput;
 
     /* Export */
     ExporterDialog exporterDialog;
@@ -155,8 +157,6 @@ private:
     /* Settings dialog containing also the settings parameter itself */
     SettingsDialog *settingsDlg;
     QDltSettingsManager *settings;
-    QLineEdit *searchTextbox;
-    QComboBox *searchComboBox;
 
     /* injections */
     QString injectionAplicationId;
@@ -382,10 +382,10 @@ private:
     void writeDLTMessageToFile(QByteArray &bufferHeader,char*bufferPayload,quint32 bufferPayloadSize,EcuItem* ecuitem,quint32 sec=0,quint32 use=0);
 
 protected:
-    void keyPressEvent ( QKeyEvent * event );
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dropEvent(QDropEvent *event);
-    void closeEvent(QCloseEvent *event);
+    void keyPressEvent ( QKeyEvent * event ) override;
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
 
 private slots:
     void reloadLogFileProgressMax(int num);
@@ -608,6 +608,9 @@ public slots:
     //History Slots
     void onAddActionToHistory();
     void onSearchProgressChanged(bool isInProgress);
+
+    void handleImportResults(const QString &);
+    void handleExportResults(const QString &);
 
 public:
 

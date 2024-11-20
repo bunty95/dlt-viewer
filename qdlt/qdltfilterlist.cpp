@@ -19,6 +19,9 @@
  * @licence end@
  */
 
+#include <regex>
+#include <stdlib.h>
+
 #include <QtDebug>
 #include <QCryptographicHash>
 
@@ -83,7 +86,7 @@ void QDltFilterList::addFilter(QDltFilter *_filter)
 
 
 #ifdef USECOLOR
-QColor QDltFilterList::checkMarker(QDltMsg &msg)
+QColor QDltFilterList::checkMarker(const QDltMsg &msg)
 {
     QDltFilter *filter;
     QColor color;
@@ -101,7 +104,7 @@ QColor QDltFilterList::checkMarker(QDltMsg &msg)
     return color;
 }
 #else
-QString QDltFilterList::checkMarker(QDltMsg &msg)
+QString QDltFilterList::checkMarker(const QDltMsg &msg)
 {
     QDltFilter *filter;
     QString color=""; // invalid colour
@@ -120,6 +123,55 @@ QString QDltFilterList::checkMarker(QDltMsg &msg)
 }
 
 #endif
+
+bool QDltFilterList::applyRegExString(QDltMsg &msg,QString &text)
+{
+    QDltFilter *filter;
+    bool result = false;
+
+    for(int numfilter=0;numfilter<pfilters.size();numfilter++)
+    {
+        filter = pfilters[numfilter];
+
+        if(filter->enableFilter && filter->enableRegexSearchReplace && filter->match(msg))
+        {
+            text.replace(QRegularExpression(filter->regex_search), filter->regex_replace);
+            result = true;
+        }
+    }
+    return result;
+}
+
+bool QDltFilterList::applyRegExStringMsg(QDltMsg &msg)
+{
+    QDltFilter *filter;
+    bool result = false;
+
+    for(int numfilter=0;numfilter<pfilters.size();numfilter++)
+    {
+        filter = pfilters[numfilter];
+
+        if(filter->enableFilter && filter->enableRegexSearchReplace  && filter->match(msg))
+        {
+            for(int num=0;num<msg.getNumberOfArguments();num++)
+            {
+                QDltArgument arg;
+                msg.getArgument(num,arg);
+                if(arg.getTypeInfo()==QDltArgument::DltTypeInfoStrg || arg.getTypeInfo()==QDltArgument::DltTypeInfoUtf8)
+                {
+                    QString text = arg.getValue().toString();
+                    text.replace(QRegularExpression(filter->regex_search), filter->regex_replace);
+                    arg.setValue(text);
+                    msg.removeArgument(num);
+                    msg.addArgument(arg,num);
+                }
+            }
+
+            result = true;
+        }
+    }
+    return result;
+}
 
 bool QDltFilterList::checkFilter(QDltMsg &msg)
 {
