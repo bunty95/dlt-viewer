@@ -9,17 +9,14 @@ BUILD_DIR="${SRC_DIR}/build"
 INSTALL_DIR="${BUILD_DIR}/install"
 APP_DIR_NAME="DLTViewer"
 
-NPROC=$(nproc)
-echo Nb of cpus: ${NPROC}
-
 rm -rf "${APP_DIR_NAME}"
 rm -rf "${SRC_DIR}/build"
 mkdir -p "${BUILD_DIR}"
 cd "${BUILD_DIR}"
 
-#echo Build with QMake
-#qmake ../BuildDltViewer.pro
-#make -j ${NPROC}
+echo Build with QMake
+qmake ../BuildDltViewer.pro
+make
 
 echo Cleanup
 rm -rf "${INSTALL_DIR}"
@@ -40,7 +37,7 @@ cmake -G Ninja \
   -DDLT_RESOURCE_INSTALLATION_PATH="${APP_DIR_NAME}/usr/share" \
   -DDLT_PLUGIN_INSTALLATION_PATH="${APP_DIR_NAME}/usr/bin/plugins" \
   "${SRC_DIR}"
-cmake --build "${BUILD_DIR}" -j ${NPROC} -v
+cmake --build "${BUILD_DIR}" -v
 
 # External CPack generator calls "cmake --install" and "linuxdeploy"
 #

@@ -2,7 +2,7 @@
 PROJECT                 = qdlt
 TEMPLATE                = lib
 
-CONFIG += c++1z
+CONFIG += c++11
 DEFINES += QDLT_LIBRARY
 *-gcc* {
     QMAKE_CFLAGS += -std=gnu99
@@ -11,7 +11,7 @@ DEFINES += QDLT_LIBRARY
 }
 
 *-g++* {
-    QMAKE_CXXFLAGS += -std=c++17
+    QMAKE_CXXFLAGS += -std=gnu++0x
     QMAKE_CXXFLAGS += -Wall
     QMAKE_CXXFLAGS += -Wextra
     QMAKE_CXXFLAGS += -DPLUGIN_INSTALLATION_PATH=\\\"$$PREFIX/usr/share/dlt-viewer/plugins\\\"
@@ -31,8 +31,6 @@ INSTALLS += target
 CONFIG                 += warn_on qt
 QT                     += network
 QT                     += serialport
-
-win32:LIBS += User32.lib
 
 # Put intermediate files in the build directory
 MOC_DIR     = build/moc
@@ -67,7 +65,6 @@ SOURCES +=  \
     qdltexporter.cpp \
     fieldnames.cpp \
     qdltimporter.cpp \
-    dltmessagematcher.cpp \
 
 HEADERS += qdlt.h \
     export_rules.h \
@@ -99,7 +96,6 @@ HEADERS += qdlt.h \
     qdltexporter.h \
     fieldnames.h \
     qdltimporter.h \
-    dltmessagematcher.h \
 
 unix:VERSION            = 1.0.0
 

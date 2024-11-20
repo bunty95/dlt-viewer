@@ -4,7 +4,6 @@ QT_VERSION = $$split(QT_VERSION, ".")
 QT_VER_MAJ = $$member(QT_VERSION, 0)
 QT_VER_MIN = $$member(QT_VERSION, 1)
 
-CONFIG += c++1z
 *-gcc* {
     QMAKE_CFLAGS += -std=gnu99
     QMAKE_CFLAGS += -Wall
@@ -13,7 +12,7 @@ CONFIG += c++1z
 }
 
 *-g++* {
-    QMAKE_CXXFLAGS += -std=c++17
+    QMAKE_CXXFLAGS += -std=gnu++0x
     QMAKE_CXXFLAGS += -Wall
     QMAKE_CXXFLAGS += -Wextra
     #QMAKE_CXXFLAGS += -pedantic
@@ -131,7 +130,6 @@ SOURCES += main.cpp \
     settingsdialog.cpp \
     injectiondialog.cpp \
     searchdialog.cpp \
-    searchform.cpp \
     multiplecontextdialog.cpp \
     sortfilterproxymodel.cpp \
     tablemodel.cpp \
@@ -149,6 +147,7 @@ SOURCES += main.cpp \
     dltmsgqueue.cpp \
     dltfileindexerthread.cpp \
     dltfileindexerdefaultfilterthread.cpp \
+    mcudpsocket.cpp \
 
 # Show these headers in the project
 HEADERS += mainwindow.h \
@@ -161,7 +160,6 @@ HEADERS += mainwindow.h \
     settingsdialog.h \
     injectiondialog.h \
     searchdialog.h \
-    searchform.h \
     sortfilterproxymodel.h \
     version.h \
     multiplecontextdialog.h \
@@ -180,7 +178,8 @@ HEADERS += mainwindow.h \
     dltmsgqueue.h \
     dltfileindexerthread.h \
     dltfileindexerdefaultfilterthread.h \
-    mcudpsocket.h
+    mcudpsocket.h \
+    regex_search_replace.h
 
 # Compile these UI files
 FORMS += mainwindow.ui \
@@ -189,7 +188,6 @@ FORMS += mainwindow.ui \
     contextdialog.ui \
     filterdialog.ui \
     plugindialog.ui \
-    searchform.ui \
     settingsdialog.ui \
     injectiondialog.ui \
     searchdialog.ui \

@@ -1,7 +1,6 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QFile>
-#include <QTime>
 
 #include <qdltfile.h>
 #include <qdltfilter.h>
@@ -68,11 +67,9 @@ int main(int argc, char *argv[])
             qDebug() << "### Load MF4 files";
         for ( const auto& i : mf4Files )
         {
-            qDebug() << "Import MF4 File:" << i << "ms";
-            QDltImporter importer(&outputfile);
-            //QTime timeStart = QTime::currentTime();
-            importer.dltIpcFromMF4(i);
-            //qDebug() << "Duration:" << timeStart.msecsTo(QTime::currentTime());
+            qDebug() << "Import MF4 File:" << i;
+            QDltImporter importer;
+            importer.dltIpcFromMF4(outputfile,i,0,false);
         }
         // load PCAP files
         QStringList pcapFiles = opt.getPcapFiles();
@@ -81,8 +78,8 @@ int main(int argc, char *argv[])
         for ( const auto& i : pcapFiles )
         {
             qDebug() << "Import PCAP File:" << i;
-            QDltImporter importer(&outputfile);
-            importer.dltIpcFromPCAP(i);
+            QDltImporter importer;
+            importer.dltIpcFromPCAP(outputfile,i,0,false);
         }
     }
 
@@ -106,7 +103,7 @@ int main(int argc, char *argv[])
         for ( const auto& i : filterFiles )
         {
             qDebug() << "Load DLT Filter:" << i;
-            if(!filterList.LoadFilter(i,false))
+            if(!filterList.LoadFilter(i,true))
                 qDebug() << "ERROR: Failed loading filter:" << i;
             dltFile.setFilterList(filterList);
             dltFile.enableFilter(true);
@@ -125,34 +122,38 @@ int main(int argc, char *argv[])
 
         if(opt.get_convertionmode()==e_DLT)
         {
+            QFile output(opt.getConvertDestFile());
             qDebug() << "### Convert to DLT";
-            QDltExporter exporter(&dltFile,opt.getConvertDestFile(),0,QDltExporter::FormatDlt,QDltExporter::SelectionFiltered,0,1,0,0,opt.getDelimiter());
+            QDltExporter exporter(1,0,0,opt.getDelimiter());
             qDebug() << "Commandline DLT convert to " << opt.getConvertDestFile();
-            exporter.exportMessages();
+            exporter.exportMessages(&dltFile,&output,0,QDltExporter::FormatDlt,QDltExporter::SelectionFiltered);
             qDebug() << "DLT export to DLT file format done";
         }
         if(opt.get_convertionmode()==e_ASCI)
         {
+            QFile output(opt.getConvertDestFile());
             qDebug() << "### Convert to ASCII";
-            QDltExporter exporter(&dltFile,opt.getConvertDestFile(),0,QDltExporter::FormatAscii,QDltExporter::SelectionFiltered,0,1,0,0,opt.getDelimiter());
+            QDltExporter exporter(1,0,0,opt.getDelimiter());
             qDebug() << "Commandline ASCII convert to " << opt.getConvertDestFile();
-            exporter.exportMessages();
+            exporter.exportMessages(&dltFile,&output,0,QDltExporter::FormatAscii,QDltExporter::SelectionFiltered);
             qDebug() << "DLT export ASCII done";
         }
         if(opt.get_convertionmode()==e_CSV)
         {
+            QFile output(opt.getConvertDestFile());
             qDebug() << "### Convert to CSV";
-            QDltExporter exporter(&dltFile,opt.getConvertDestFile(),0,QDltExporter::FormatCsv,QDltExporter::SelectionFiltered,0,1,0,0,opt.getDelimiter());
+            QDltExporter exporter(1,0,0,opt.getDelimiter());
             qDebug() << "Commandline ASCII convert to " << opt.getConvertDestFile();
-            exporter.exportMessages();
+            exporter.exportMessages(&dltFile,&output,0,QDltExporter::FormatCsv,QDltExporter::SelectionFiltered);
             qDebug() << "DLT export CSV done";
         }
         if(opt.get_convertionmode()==e_UTF8)
         {
+            QFile output(opt.getConvertDestFile());
             qDebug() << "### Convert to UTF8";
-            QDltExporter exporter(&dltFile,opt.getConvertDestFile(),0,QDltExporter::FormatUTF8,QDltExporter::SelectionFiltered,0,1,0,0,opt.getDelimiter());
+            QDltExporter exporter(1,0,0,opt.getDelimiter());
             qDebug() << "Commandline UTF8 convert to " << opt.getConvertDestFile();
-            exporter.exportMessages();
+            exporter.exportMessages(&dltFile,&output,0,QDltExporter::FormatUTF8,QDltExporter::SelectionFiltered);
             qDebug() << "DLT export UTF8 done";
         }
     }

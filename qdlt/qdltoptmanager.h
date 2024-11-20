@@ -21,7 +21,6 @@
 #define QDLTOPTMANAGER_H
 
 #include <QStringList>
-#include <QCommandLineParser>
 
 #include "export_rules.h"
 
@@ -45,9 +44,9 @@ class QDLT_EXPORT QDltOptManager
 {
 public:
     static QDltOptManager* getInstance();
-    void printUsage(const QString& helpText);
+    void printUsage();
     void printVersion(QString appname);
-    void parse(const QStringList& opt);
+    void parse(QStringList *opt);
 
     bool isProjectFile();
     bool isTerminate();
@@ -72,20 +71,16 @@ public:
     const QStringList &getMf4Files() const;
     char getDelimiter();
 
-    QString getHelpText() const;
-
-    // only testing relevant
-    void reset();
-
 private:
     QDltOptManager();
+    QDltOptManager(QDltOptManager const&);
+    static QDltOptManager *instance;
 
-private:
-    bool project{false};
-    bool terminate{false};
-    bool silent_mode{false};
-    bool commandline_mode{false};
-    e_convertionmode convertionmode{e_ASCI};
+    bool project;
+    bool terminate;
+    bool silent_mode;
+    bool commandline_mode;
+    e_convertionmode convertionmode;
     e_inputmode inputmode{e_inputmode::DLT};
 
     QString projectFile;
@@ -102,9 +97,7 @@ private:
     QStringList postPluginCommands; // command after loading log file
 
     QString  workingDirectory;
-    char delimiter{','};
-
-    QCommandLineParser m_parser;
+    char delimiter;
 };
 
 #endif //QDLTOPTMANAGER_H

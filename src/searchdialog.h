@@ -78,15 +78,18 @@ private:
     Ui::SearchDialog *ui;
     SearchTableModel *m_searchtablemodel;
 
-    bool isSearchCancelled{false};
-
     long int startLine;
     long searchseconds;
     bool nextClicked;
     bool match;
     bool onceClicked;
     bool fSilentMode;
+    bool is_PayloadStartFound;
+    bool is_PayloadEndFound;
+    bool is_PayLoadRangeValid;
+    bool is_payLoadSearchSelected;
     bool is_TimeStampSearchSelected;
+    bool is_TimeStampRangeValid;
     bool fIs_APID_CTID_requested;
 
     QString TimeStampStarttime;
@@ -94,6 +97,9 @@ private:
     double  dTimeStampStart;
     double  dTimeStampStop;
 
+    QString payloadStart;
+    QString payloadEnd;
+    QString tempPayLoad;
     QString stApid;
     QString stCtid;
 
@@ -117,6 +123,7 @@ private:
     int find();
 
     bool getSearchFromBeginning();
+    bool timeStampPayloadValidityCheck(long int searchLine);
     bool getHeader();
     bool getPayload();
     bool getCaseSensitive();
@@ -126,6 +133,8 @@ private:
     bool getOnceClicked();
     bool searchtoIndex();
     bool foundLine(long int searchLine);
+    bool payLoadStartpatternCheck();
+    bool payLoadStoppatternCheck();
     QString getApIDText();
     QString getCtIDText();
     QString getTimeStampStart();
@@ -157,13 +166,11 @@ public slots:
     void findNextClicked();
     void findPreviousClicked();
     void loadSearchHistory();
-    void abortSearch();
 
 signals:
     void refreshedSearchIndex();
     void addActionHistory();
     void searchProgressChanged(bool isInProgress);
-    void searchProgressValueChanged(int progress);
 };
 
 #endif // SEARCHDIALOG_H
