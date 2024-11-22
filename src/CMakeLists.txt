@@ -67,6 +67,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 set_target_properties(dlt-viewer PROPERTIES
+    MACOSX_BUNDLE TRUE # per "https://doc.qt.io/qt-6.7/macos-deployment.html" to build macos bundle
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
     INSTALL_RPATH "$<$<BOOL:${LINUX}>:$ORIGIN/../lib;>$<$<BOOL:${APPLE}>:@loader_path/../Frameworks;>$<$<BOOL:${DLT_USE_QT_RPATH}>:${DLT_QT_LIB_DIR}>")
 
