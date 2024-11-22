@@ -14,7 +14,7 @@
 # List of changes:
 # 01.Oct.2016, Jack Smith <jack.smith@elektrobit.com>, Original Author
 
-cmake_minimum_required (VERSION 3.15)
+cmake_minimum_required(VERSION 3.21.1)
 # implicitly calls version checks
 include(scripts/windows/version.cmake)
 include(scripts/linux/version.cmake)
