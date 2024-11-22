@@ -31,12 +31,6 @@ rm -rf "${SRC_DIR}/build"
 mkdir -p "${BUILD_DIR}"
 cd "${BUILD_DIR}"
 
-echo Build with qt-cmake
-
-/opt/homebrew/opt/qt/macos/bin/qt-cmake -S ${SRC_DIR} -B ${BUILD_DIR} -G Ninja
-cd ${BUILD_DIR}
-ninja
-
 echo Build with CMake
 # Installation paths configuration creates proper macOS Application bundle structure
 # https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFBundles/BundleTypes/BundleTypes.html
@@ -66,6 +60,9 @@ cmake --build "${BUILD_DIR}"
 #
 # CMake install takes care of proper macOs Application bundle setup. Each CMake target has a pre-configured path in bundle.
 # macdeployqt copies all used QT5 Frameworks into bundle and patches RPATH in project binaries.
+
+make install
+
 cpack -G External
 
 cd "${BUILD_DIR}"
