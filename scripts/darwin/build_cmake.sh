@@ -61,6 +61,7 @@ cmake --build "${BUILD_DIR}"
 # CMake install takes care of proper macOs Application bundle setup. Each CMake target has a pre-configured path in bundle.
 # macdeployqt copies all used QT5 Frameworks into bundle and patches RPATH in project binaries.
 
+make
 make install
 
 cpack -G External
