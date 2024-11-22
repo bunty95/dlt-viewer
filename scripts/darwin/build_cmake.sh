@@ -33,7 +33,7 @@ cd "${BUILD_DIR}"
 
 echo Build with qt-cmake
 
-${QT6_DIR}/bin/qt-cmake -S ${SRC_DIR} -B ${BUILD_DIR} -G Ninja
+/opt/homebrew/opt/qt/macos/bin/qt-cmake -S ${SRC_DIR} -B ${BUILD_DIR} -G Ninja
 cd ${BUILD_DIR}
 ninja
 
