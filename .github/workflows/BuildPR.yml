@@ -108,7 +108,7 @@ jobs:
           path: build/dist/DLTViewer*.tgz
 
 
-  buildLinux:
+  buildUbuntu20:
     name: Build ${{ matrix.ubuntu }}
     strategy:
       matrix:
@@ -121,9 +121,9 @@ jobs:
           fetch-depth: 0
           submodules: true
       - name: install build environment
-        run: scripts/linux/install.sh
+        run: scripts/linux/installUbuntu20.sh
       - name: Build project
-        run: scripts/linux/build.sh
+        run: scripts/linux/buildUbuntu20.sh
       - name: Run tests
         run: ctest --test-dir build/qdlt
       - name: Make artifact executable
@@ -134,6 +134,23 @@ jobs:
         with:
           name: DLTViewer-linux-x86_64
           path: build/dist/DLTViewer*.tgz
+
+  buildUbuntu22and24:
+    name: Build ${{ matrix.ubuntu }}
+    strategy:
+      matrix:
+        ubuntu: [ ubuntu-22.04, ubuntu-24.04 ]
+    runs-on: ${{ matrix.ubuntu }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+      - name: install build environment
+        run: scripts/linux/installUbuntu22and24.sh
+      - name: Build project
+        run: scripts/linux/buildUbuntu22and24.sh
 
   buildWindows:
     name: Build Windows
