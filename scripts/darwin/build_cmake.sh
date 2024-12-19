@@ -15,12 +15,15 @@ if [[ $(uname -m) == 'arm64' ]]; then
   Qt6_DIR="/opt/homebrew/opt/qt@6"
   echo "Build with cmake $(uname -m) $Qt6_DIR"
   echo 'export PATH="/opt/homebrew/Cellar/qt@6/bin"' >> ~/.zshrc
+  MACDEPLOY="/opt/homebrew/Cellar/qt@6/bin/macdeployqt"
 #  qmake ../BuildDltViewer.pro
 #  cmake ..
 else
   Qt6_DIR="/usr/local/opt/qt"
   echo "Build with qmake $(uname -m) $Qt6_DIR"
   echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> ~/.zshrc
+  MACDEPLOY="/usr/local/opt/qt/bin/macdeployqt"
+
  # qmake ../BuildDltViewer.pro
  # make
 fi
@@ -40,6 +43,7 @@ cmake -G Ninja \
   -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
   -DCMAKE_PREFIX_PATH=${Qt6_DIR}/lib/cmake \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 \
+  -DMACDEPLOYQT_EXECUTABLE="${MACDEPLOY}" \
   -DCMAKE_BUILD_TYPE=Release \
   -DDLT_USE_QT_RPATH=ON \
   -DDLT_PARSER=OFF \
