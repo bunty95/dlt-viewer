@@ -18,10 +18,10 @@ if [[ -z "$QT_VERSION" ]]; then
 fi
 
 # follow brew install suggestions
-echo 'export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"' >> ~/.bash_profile
-export LDFLAGS="-L/opt/homebrew/opt/qt@5/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/qt@5/include"
-export PKG_CONFIG_PATH="/opt/homebrew/opt/qt@5/lib/pkgconfig"
+echo 'export PATH="/opt/homebrew/opt/qt/bin:$PATH"' >> ~/.bash_profile
+export LDFLAGS="-L/opt/homebrew/opt/qt/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/qt/include"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/qt/lib/pkgconfig"
 source ~/.bash_profile
 
 uname -a
