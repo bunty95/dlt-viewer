@@ -55,10 +55,10 @@ add_executable(dlt-viewer MACOSX_BUNDLE
 
 target_link_libraries(dlt-viewer
     qdlt
-    Qt${QT_PREFIX}::Core
-    Qt${QT_PREFIX}::Network
-    Qt${QT_PREFIX}::Widgets
-    Qt${QT_PREFIX}::SerialPort)
+    ${QT_PREFIX}::Core
+    ${QT_PREFIX}::Network
+    ${QT_PREFIX}::Widgets
+    ${QT_PREFIX}::SerialPort)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     # https://stackoverflow.com/questions/45329372/ubuntu-recognizes-executable-as-shared-library-and-wont-run-it-by-clicking
