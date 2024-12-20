@@ -18,7 +18,7 @@ else()
     QT5_ADD_RESOURCES(UI_RESOURCES_RCC resources/resource.qrc)
 endif()
 
-qt_add_executable(dlt-viewer
+add_executable(dlt-viewer
     main.cpp
     mainwindow.cpp
     project.cpp
