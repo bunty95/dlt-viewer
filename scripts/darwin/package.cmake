@@ -6,7 +6,7 @@ endif()
 set(CPACK_GENERATOR External)
 
 get_target_property(MOC_LOCATION ${QT_PREFIX}::Core LOCATION)
-get_filename_component(MACDEPLOYQT_EXECUTABLE ${MOC_LOCATION}/../macdeployqt ABSOLUTE)
+get_filename_component(MACDEPLOYQT_EXECUTABLE ${MOC_LOCATION}/../../../bin/macdeployqt ABSOLUTE)
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/scripts/darwin/macdeployqt.cmake.in" "${CMAKE_BINARY_DIR}/macdeployqt.cmake" @ONLY)
 
 set(CPACK_EXTERNAL_PACKAGE_SCRIPT "${CMAKE_BINARY_DIR}/macdeployqt.cmake")
