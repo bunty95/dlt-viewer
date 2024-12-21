@@ -14,14 +14,14 @@ cd "${BUILD_DIR}"
 if [[ $(uname -m) == 'arm64' ]]; then
   Qt6_DIR="/opt/homebrew/opt/qt@6"
   echo "Build with cmake $(uname -m) $Qt6_DIR"
-  echo 'export PATH="/opt/homebrew/Cellar/qt@6/bin"' >> ~/.zshrc
+  export PATH="/opt/homebrew/Cellar/qt@6/bin" >> ~/.zshrc
   MACDEPLOY="/opt/homebrew/Cellar/qt@6/bin/macdeployqt"
 #  qmake ../BuildDltViewer.pro
 #  cmake ..
 else
   Qt6_DIR="/usr/local/opt/qt"
   echo "Build with qmake $(uname -m) $Qt6_DIR"
-  echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> ~/.zshrc
+  export PATH="/usr/local/opt/qt/bin:$PATH" >> ~/.zshrc
   MACDEPLOY="/usr/local/opt/qt/bin/macdeployqt"
 
  # qmake ../BuildDltViewer.pro
