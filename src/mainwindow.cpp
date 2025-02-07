@@ -62,11 +62,7 @@ extern "C" {
 
 #if defined(_MSC_VER)
 #include <io.h>
-#include <time.h>
 #include <WinSock.h>
-#else
-#include <unistd.h>     /* for read(), close() */
-#include <sys/time.h>	/* for gettimeofday() */
 #endif
 
 #include "mainwindow.h"
@@ -875,7 +871,7 @@ void MainWindow::commandLineConvertToDLT()
     qDebug() << "### Convert to DLT";
 
     /* start exporter */
-    QDltExporter exporter(&qfile,QDltOptManager::getInstance()->getConvertDestFile(),&pluginManager,QDltExporter::FormatDlt,QDltExporter::SelectionFiltered,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
+    QDltExporter exporter(&qfile,QDltOptManager::getInstance()->getConvertDestFile(),&pluginManager,QDltExporter::FormatDlt,QDltExporter::SelectionFiltered,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter(),QDltOptManager::getInstance()->getSignature());
     qDebug() << "Commandline DLT convert to " << QDltOptManager::getInstance()->getConvertDestFile();
     exporter.exportMessages();
     qDebug() << "DLT export to DLT file format done";
@@ -887,7 +883,7 @@ void MainWindow::commandLineConvertToASCII()
     qDebug() << "### Convert to ASCII";
 
     /* start exporter */
-    QDltExporter exporter(&qfile,QDltOptManager::getInstance()->getConvertDestFile(),&pluginManager,QDltExporter::FormatAscii,QDltExporter::SelectionFiltered,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
+    QDltExporter exporter(&qfile,QDltOptManager::getInstance()->getConvertDestFile(),&pluginManager,QDltExporter::FormatAscii,QDltExporter::SelectionFiltered,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter(),QDltOptManager::getInstance()->getSignature());
     qDebug() << "Commandline ASCII convert to " << QDltOptManager::getInstance()->getConvertDestFile();
     exporter.exportMessages();
     qDebug() << "DLT export ASCII done";
@@ -898,7 +894,7 @@ void MainWindow::commandLineConvertToCSV()
     qDebug() << "### Convert to CSV";
 
     /* start exporter */
-    QDltExporter exporter(&qfile,QDltOptManager::getInstance()->getConvertDestFile(),&pluginManager,QDltExporter::FormatCsv,QDltExporter::SelectionFiltered,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
+    QDltExporter exporter(&qfile,QDltOptManager::getInstance()->getConvertDestFile(),&pluginManager,QDltExporter::FormatCsv,QDltExporter::SelectionFiltered,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter(),QDltOptManager::getInstance()->getSignature());
     qDebug() << "Commandline ASCII convert to " << QDltOptManager::getInstance()->getConvertDestFile();
     exporter.exportMessages();
     qDebug() << "DLT export CSV done";
@@ -910,7 +906,7 @@ void MainWindow::commandLineConvertToUTF8()
     /* start exporter */
     qDebug() << "### Convert to UTF8";
 
-    QDltExporter exporter(&qfile,QDltOptManager::getInstance()->getConvertDestFile(),&pluginManager,QDltExporter::FormatUTF8,QDltExporter::SelectionFiltered,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
+    QDltExporter exporter(&qfile,QDltOptManager::getInstance()->getConvertDestFile(),&pluginManager,QDltExporter::FormatUTF8,QDltExporter::SelectionFiltered,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter(),QDltOptManager::getInstance()->getSignature());
     qDebug() << "Commandline UTF8 convert to " << QDltOptManager::getInstance()->getConvertDestFile();
     exporter.exportMessages();
     qDebug() << "DLT export UTF8 done";
@@ -921,7 +917,7 @@ void MainWindow::commandLineConvertToDLTDecoded()
     qDebug() << "### Convert to DLT Decoded";
 
     /* start exporter */
-    QDltExporter exporter(&qfile,QDltOptManager::getInstance()->getConvertDestFile(),&pluginManager,QDltExporter::FormatDltDecoded,QDltExporter::SelectionFiltered,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
+    QDltExporter exporter(&qfile,QDltOptManager::getInstance()->getConvertDestFile(),&pluginManager,QDltExporter::FormatDltDecoded,QDltExporter::SelectionFiltered,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter(),QDltOptManager::getInstance()->getSignature());
     qDebug() << "Commandline decoding to dlt formated file" << QDltOptManager::getInstance()->getConvertDestFile();
     exporter.exportMessages();
     qDebug() << "DLT export DLT decoded done";
@@ -1556,7 +1552,7 @@ void MainWindow::exportSelection(bool ascii = true,bool file = false,QDltExporte
 
     filterUpdate(); // update filters of qfile before starting Exporting for RegEx operation
 
-    QDltExporter exporter(&qfile,"",&pluginManager,format,QDltExporter::SelectionSelected,&list,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
+    QDltExporter exporter(&qfile,"",&pluginManager,format,QDltExporter::SelectionSelected,&list,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter(),QDltOptManager::getInstance()->getSignature());
     connect(&exporter,SIGNAL(clipboard(QString)),this,SLOT(clipboard(QString)));
     exporter.exportMessages();
     disconnect(&exporter,SIGNAL(clipboard(QString)),this,SLOT(clipboard(QString)));
@@ -1594,7 +1590,7 @@ void MainWindow::exportSelection_searchTable(QDltExporter::DltExportFormat forma
 
     filterUpdate(); // update filters of qfile before starting Exporting for RegEx operation
 
-    QDltExporter exporter(&qfile,"",&pluginManager,format,QDltExporter::SelectionSelected,&finallist,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter());
+    QDltExporter exporter(&qfile,"",&pluginManager,format,QDltExporter::SelectionSelected,&finallist,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter(),QDltOptManager::getInstance()->getSignature());
     connect(&exporter,SIGNAL(clipboard(QString)),this,SLOT(clipboard(QString)));
     exporter.exportMessages();
     disconnect(&exporter,SIGNAL(clipboard(QString)),this,SLOT(clipboard(QString)));
@@ -1703,11 +1699,11 @@ void MainWindow::on_actionExport_triggered()
 
     if(exportSelection == QDltExporter::SelectionSelected) // marked messages
     {
-        exporterThread = new QDltExporter(&qfile, fileName, &pluginManager,exportFormat,exportSelection,&list,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter(),this);
+        exporterThread = new QDltExporter(&qfile, fileName, &pluginManager,exportFormat,exportSelection,&list,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter(),QDltOptManager::getInstance()->getSignature(),this);
     }
     else
     {
-        exporterThread = new QDltExporter(&qfile, fileName, &pluginManager,exportFormat,exportSelection,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter(),this);
+        exporterThread = new QDltExporter(&qfile, fileName, &pluginManager,exportFormat,exportSelection,0,project.settings->automaticTimeSettings,project.settings->utcOffset,project.settings->dst,QDltOptManager::getInstance()->getDelimiter(),QDltOptManager::getInstance()->getSignature(),this);
         exporterThread->exportMessageRange(startix,stopix);
     }
     connect(exporterThread, &QDltExporter::progress,    this, &MainWindow::progress);
@@ -3927,38 +3923,9 @@ void MainWindow::readyRead()
 
 }
 
-void MainWindow::writeDLTMessageToFile(QByteArray &bufferHeader,char* bufferPayload,quint32 bufferPayloadSize,EcuItem* ecuitem,quint32 sec,quint32 usec)
-{
-    DltStorageHeader str;
-
-    str.pattern[0]='D';
-    str.pattern[1]='L';
-    str.pattern[2]='T';
-    str.pattern[3]=0x01;
-    str.ecu[0]=0;
-    str.ecu[1]=0;
-    str.ecu[2]=0;
-    str.ecu[3]=0;
-
-    if (sec || usec)
-    { // todo should better use ptrs and not != 0
-        str.seconds = (time_t)sec;
-        str.microseconds = (int32_t)usec;
-    }
-    else
-    {
-#if defined(_MSC_VER)
-        struct timespec ts;
-        (void)timespec_get(&ts, TIME_UTC);
-        str.seconds = (time_t)ts.tv_sec;
-        str.microseconds = (int32_t)(ts.tv_nsec / 1000);
-#else
-        struct timeval tv;
-        gettimeofday(&tv, NULL);
-        str.seconds = (time_t)tv.tv_sec;        /* value is long */
-        str.microseconds = (int32_t)tv.tv_usec; /* value is long */
-#endif
-    }
+void MainWindow::writeDLTMessageToFile(const QByteArray& bufferHeader, std::string_view payload,
+                                       const EcuItem* ecuitem) {
+    DltStorageHeader str = QDltImporter::makeDltStorageHeader();
     if (ecuitem)
         dlt_set_id(str.ecu, ecuitem->id.toLatin1());
 
@@ -3976,7 +3943,7 @@ void MainWindow::writeDLTMessageToFile(QByteArray &bufferHeader,char* bufferPayl
     if( settings->splitlogfile != 0) // only in case the file size limit checking is active ...
      {
      // check if files size limit reached ( see Settings->Project Other->Maximum File Size )
-     if( ( ((outputfile.size()+sizeof(DltStorageHeader)+bufferHeader.size()+bufferPayloadSize)) > settings->fmaxFileSizeMB *1000*1000) )
+     if( ( ((outputfile.size()+sizeof(DltStorageHeader)+bufferHeader.size()+ payload.size())) > settings->fmaxFileSizeMB *1000*1000) )
       {
         createsplitfile();
       }
@@ -4004,10 +3971,9 @@ void MainWindow::writeDLTMessageToFile(QByteArray &bufferHeader,char* bufferPayl
         outputfile.write(ecuitem->id.toLatin1(),ecuitem->id.length());
     }
     outputfile.write(bufferHeader);
-    outputfile.write(bufferPayload,bufferPayloadSize);
+    outputfile.write(payload.data(), payload.size());
     outputfile.flush();
     outputfile.close();
-
 }
 
 void MainWindow::read(EcuItem* ecuitem)
@@ -4040,8 +4006,8 @@ void MainWindow::read(EcuItem* ecuitem)
             bytesRcvd = ecuitem->udpsocket.readDatagram( data.data(), data.size() );
             //qDebug() << "bytes received" << bytesRcvd;
             unsigned int dataSize = data.size();
-            char* dataPtr = data.data();
-            // Find one ore more DLT messages in the UDP message
+            const char* dataPtr = data.data();
+            // Find one or more DLT messages in the UDP message
             while(dataSize>0)
             {
                 quint32 sizeMsg = qmsg.checkMsgSize(dataPtr,dataSize,settings->supportDLTv2Decoding);
@@ -4061,13 +4027,13 @@ void MainWindow::read(EcuItem* ecuitem)
                         }
                         if(qfile.checkFilter(qmsg))
                         {
-                            writeDLTMessageToFile(empty,dataPtr,sizeMsg,ecuitem);
+                            writeDLTMessageToFile(empty,{dataPtr,sizeMsg}, ecuitem);
                         }
                     }
                     else
                     {
                         // write all messages
-                        writeDLTMessageToFile(empty,dataPtr,sizeMsg,ecuitem);
+                        writeDLTMessageToFile(empty, {dataPtr,sizeMsg}, ecuitem);
                     }
                     totalBytesRcvd+=sizeMsg;
                     if(sizeMsg<=dataSize)
@@ -4132,10 +4098,8 @@ void MainWindow::read(EcuItem* ecuitem)
             }
 
             /* write message to file */
-            QByteArray bufferHeader;
-            QByteArray bufferPayload;
-            bufferHeader = qmsg.getHeader();
-            bufferPayload = qmsg.getPayload();
+            const QByteArray bufferHeader = qmsg.getHeader();
+            const QByteArray bufferPayload = qmsg.getPayload();
             if(settings->loggingOnlyFilteredMessages)
             {
                 // write only messages which match filter
@@ -4146,13 +4110,21 @@ void MainWindow::read(EcuItem* ecuitem)
                 }
                 if(qfile.checkFilter(qmsg))
                 {
-                    writeDLTMessageToFile(bufferHeader,bufferPayload.data(),bufferPayload.size(),ecuitem);
+                    writeDLTMessageToFile(
+                                bufferHeader,
+                                {bufferPayload.data(),
+                                 static_cast<std::string_view::size_type>(bufferPayload.size())},
+                                ecuitem);
                 }
             }
             else
             {
                 // write all messages
-                writeDLTMessageToFile(bufferHeader,bufferPayload.data(),bufferPayload.size(),ecuitem);
+                writeDLTMessageToFile(
+                            bufferHeader,
+                            {bufferPayload.data(),
+                             static_cast<std::string_view::size_type>(bufferPayload.size())},
+                            ecuitem);
             }
 
         } //end while
