@@ -13,13 +13,13 @@ cd "${BUILD_DIR}"
 
 if [[ $(uname -m) == 'arm64' ]]; then
   Qt6_DIR="/opt/homebrew/opt/qt"
-  echo "Build with cmake $(uname -m) $Qt6_DIR"
-  qmake ../BuildDltViewer.pro
+  #echo "Build with cmake $(uname -m) $Qt6_DIR"
+  #qmake ../BuildDltViewer.pro
 #  cmake ..
 else
   Qt6_DIR="/usr/local/opt/qt"
-  echo "Build with qmake $(uname -m) $Qt6_DIR"
-  qmake ../BuildDltViewer.pro
+  #echo "Build with qmake $(uname -m) $Qt6_DIR"
+  #qmake ../BuildDltViewer.pro
 # make
 fi
 
