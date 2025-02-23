@@ -64,12 +64,12 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -Wno-variadic-macros -Wno-strict-aliasing -fPIC")
 endif()
 
-add_compile_definitions(QT5)
-set(QT5_QT6_COMPAT_VERSION "5.14")
+add_compile_definitions(QT6)
+set(QT6_VERSION "6.0")
 # add compiler definition to be used for >= Qt 5.14 code
-if(${QT_PREFIX}Core_VERSION VERSION_GREATER_EQUAL ${QT5_QT6_COMPAT_VERSION})
-    add_compile_definitions(QT5_QT6_COMPAT)
-endif()
+# if(${QT_PREFIX}Core_VERSION VERSION_GREATER_EQUAL ${QT5_QT6_COMPAT_VERSION})
+#    add_compile_definitions(QT5_QT6_COMPAT)
+# endif()
 
 option(DLT_USE_STANDARD_INSTALLATION_LOCATION "Use standard GNU installation locations" OFF)
 option(DLT_INSTALL_SDK "Install in SDK location" ON)
