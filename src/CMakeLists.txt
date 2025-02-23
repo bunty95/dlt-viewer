@@ -13,9 +13,9 @@
 # 01.Oct.2016, Jack Smith <jack.smith@elektrobit.com>, Original Author
 
 if("${QT_PREFIX}" STREQUAL "Qt6")
-    QT6_ADD_RESOURCES(UI_RESOURCES_RCC resources/resource.qrc)
+    qt6_add_resources(UI_RESOURCES_RCC resources/resource.qrc)
 else()
-    QT5_ADD_RESOURCES(UI_RESOURCES_RCC resources/resource.qrc)
+    qt5_add_resources(UI_RESOURCES_RCC resources/resource.qrc)
 endif()
 
 add_executable(dlt-viewer
@@ -72,7 +72,7 @@ set_target_properties(dlt-viewer PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
     INSTALL_RPATH "$<$<BOOL:${LINUX}>:$ORIGIN/../lib;>$<$<BOOL:${APPLE}>:@loader_path/../Frameworks;>$<$<BOOL:${DLT_USE_QT_RPATH}>:${DLT_QT_LIB_DIR}>")
 
-    install(TARGETS dlt-viewer
+install(TARGETS dlt-viewer
     DESTINATION "${DLT_EXECUTABLE_INSTALLATION_PATH}"
     # Underscore for NSIS compatibility https://gitlab.kitware.com/cmake/cmake/-/issues/19982
     COMPONENT dlt_viewer)
