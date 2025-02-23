@@ -15,14 +15,6 @@ else()
     message(STATUS "Success.")
 endif()
 
-# execute_process(COMMAND ls -l
-#     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
-#     RESULT_VARIABLE STATUS)
-
-# execute_process(COMMAND tree
-#     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
-#     RESULT_VARIABLE STATUS)
-
 file(GLOB DLT_PLUGINS_SO "${CMAKE_INSTALL_PREFIX}/${DLT_PLUGIN_INSTALLATION_PATH}/*.so")
 list(TRANSFORM DLT_PLUGINS_SO PREPEND "-executable=")
 
