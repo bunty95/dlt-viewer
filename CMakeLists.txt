@@ -47,7 +47,11 @@ set (CMAKE_AUTORCC ON)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-get_target_property(DLT_QT_LIBRARY_PATH ${QT_PREFIX}::Core LOCATION)
+# Ensure Qt 6 is being used
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Network Gui)
+
+# Get Qt library paths for RPATH settings
+get_target_property(DLT_QT_LIBRARY_PATH Qt6::Core LOCATION)
 get_filename_component(DLT_QT_LIB_DIR ${DLT_QT_LIBRARY_PATH} DIRECTORY)
 
 if(NOT WIN32)
@@ -64,88 +68,15 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -Wno-variadic-macros -Wno-strict-aliasing -fPIC")
 endif()
 
+# Define Qt6 compatibility
 add_compile_definitions(QT6)
+
+# Remove any Qt5 compatibility code
+# This is specific to Qt 6 and does not include older Qt versions
 set(QT6_VERSION "6.0")
-# add compiler definition to be used for >= Qt 5.14 code
-# if(${QT_PREFIX}Core_VERSION VERSION_GREATER_EQUAL ${QT5_QT6_COMPAT_VERSION})
-#    add_compile_definitions(QT5_QT6_COMPAT)
-# endif()
 
 option(DLT_USE_STANDARD_INSTALLATION_LOCATION "Use standard GNU installation locations" OFF)
 option(DLT_INSTALL_SDK "Install in SDK location" ON)
 if(NOT WIN32)
-    if(NOT DLT_APP_DIR_NAME)
-        set(DLT_APP_DIR_NAME "DLTViewer")
-        if(APPLE)
-            set(DLT_APP_DIR_NAME "DLTViewer.app")
-        endif()
-    endif()
-    if(DLT_USE_STANDARD_INSTALLATION_LOCATION)
-        include(GNUInstallDirs)
-        set(DLT_PLUGIN_INSTALLATION_PATH "${CMAKE_INSTALL_FULL_LIBDIR}/dlt-viewer/plugins")
-        set(DLT_RESOURCE_INSTALLATION_PATH "${CMAKE_INSTALL_FULL_DATADIR}")
-        set(DLT_EXECUTABLE_INSTALLATION_PATH "${CMAKE_INSTALL_FULL_BINDIR}")
-        set(DLT_LIBRARY_INSTALLATION_PATH "${CMAKE_INSTALL_FULL_LIBDIR}")
-    else()
-        if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-            set(CMAKE_INSTALL_PREFIX "DLTViewer")
-        endif()
-        if(NOT DLT_PLUGIN_INSTALLATION_PATH)
-            set(DLT_PLUGIN_INSTALLATION_PATH "${DLT_APP_DIR_NAME}/usr/bin/plugins")
-        endif()
-        if(NOT DLT_RESOURCE_INSTALLATION_PATH)
-            set(DLT_RESOURCE_INSTALLATION_PATH "${DLT_APP_DIR_NAME}/usr/share")
-        endif()
-        if(NOT DLT_EXECUTABLE_INSTALLATION_PATH)
-            set(DLT_EXECUTABLE_INSTALLATION_PATH "${DLT_APP_DIR_NAME}/usr/bin")
-        endif()
-        if(NOT DLT_LIBRARY_INSTALLATION_PATH)
-            set(DLT_LIBRARY_INSTALLATION_PATH "${DLT_APP_DIR_NAME}/usr/lib")
-        endif()
-    endif()
-else()
-    if(NOT DLT_APP_DIR_NAME)
-        set(DLT_APP_DIR_NAME "./")
-    endif()
-    if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-        # AppData is a modern install location. No Admin rights required.
-        file(TO_CMAKE_PATH "$ENV{LOCALAPPDATA}/Programs/dlt-viewer" CMAKE_INSTALL_PREFIX)
-        set(CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX} CACHE PATH "..." FORCE)
-    endif()
-
-    if(NOT DLT_PLUGIN_INSTALLATION_PATH)
-        set(DLT_PLUGIN_INSTALLATION_PATH "plugins")
-    endif()
-    if(NOT DLT_RESOURCE_INSTALLATION_PATH)
-        set(DLT_RESOURCE_INSTALLATION_PATH ".")
-    endif()
-    if(NOT DLT_EXECUTABLE_INSTALLATION_PATH)
-        set(DLT_EXECUTABLE_INSTALLATION_PATH ".")
-    endif()
-    if(NOT DLT_LIBRARY_INSTALLATION_PATH)
-        set(DLT_LIBRARY_INSTALLATION_PATH ".")
-    endif()
-endif()
-
-option(DLT_PARSER "Build DLT Parser" OFF)
-
-if(DLT_PARSER)
-    add_subdirectory(parser)
-endif()
-
-add_subdirectory(qdlt)
-add_subdirectory(src)
-add_subdirectory(plugin)
-add_subdirectory(commander)
-
-message(STATUS "\n\t** DLT Viewer Build Summary **")
-message(STATUS "\tCMAKE_INSTALL_PREFIX:         ${CMAKE_INSTALL_PREFIX}")
-message(STATUS "\tCMAKE_BUILD_TYPE:             ${CMAKE_BUILD_TYPE}")
-message(STATUS "\tCMAKE_SYSTEM_PROCESSOR:       ${CMAKE_SYSTEM_PROCESSOR}")
-message(STATUS "\tCMAKE_SYSTEM_NAME:            ${CMAKE_SYSTEM_NAME}")
-message(STATUS "\tDLT_QT_LIB_DIR:               ${DLT_QT_LIB_DIR}\n")
-
-# Must be last
-include(scripts/windows/package.cmake)
-include(scripts/linux/package.cmake)
-include(scripts/darwin/package.cmake)
+    if(NOT DLT_APP_DIR
+
