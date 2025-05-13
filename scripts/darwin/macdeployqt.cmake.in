@@ -4,21 +4,28 @@ set(CMAKE_INSTALL_PREFIX "@CMAKE_INSTALL_PREFIX@")
 set(DLT_APP_DIR_NAME "@DLT_APP_DIR_NAME@")
 set(DLT_PLUGIN_INSTALLATION_PATH "@DLT_PLUGIN_INSTALLATION_PATH@")
 
-# See CMAKE_INSTALL_PREFIX
+# Ensure compatibility with Qt6's macdeployqt
+# Install the application to the specified prefix
 execute_process(COMMAND ${CMAKE_COMMAND} "--install" "." "--prefix" "${CMAKE_INSTALL_PREFIX}"
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
     RESULT_VARIABLE STATUS)
 
 if(STATUS AND NOT STATUS EQUAL 0)
-    message(SEND_ERROR "Failure: ${STATUS}")
+    message(SEND_ERROR "Failure during installation: ${STATUS}")
 else()
-    message(STATUS "Success.")
+    message(STATUS "Installation successful.")
 endif()
 
+# Locate all plugin shared objects (*.so files)
 file(GLOB DLT_PLUGINS_SO "${CMAKE_INSTALL_PREFIX}/${DLT_PLUGIN_INSTALLATION_PATH}/*.so")
 list(TRANSFORM DLT_PLUGINS_SO PREPEND "-executable=")
 
-message(STATUS "Call ${MACDEPLOYQT_EXECUTABLE} ${DLT_APP_DIR_NAME} ${DLT_PLUGINS_SO}")
+# Debug information for macdeployqt call
+message(STATUS "Calling ${MACDEPLOYQT_EXECUTABLE} with arguments:")
+message(STATUS "Application Directory: ${DLT_APP_DIR_NAME}")
+message(STATUS "Plugins: ${DLT_PLUGINS_SO}")
+
+# Execute macdeployqt for Qt6
 execute_process(COMMAND
     "${MACDEPLOYQT_EXECUTABLE}"
     "${DLT_APP_DIR_NAME}"
@@ -31,7 +38,7 @@ execute_process(COMMAND
     RESULT_VARIABLE STATUS)
 
 if(STATUS AND NOT STATUS EQUAL 0)
-    message(SEND_ERROR "Failure: ${STATUS}")
+    message(SEND_ERROR "Failure during macdeployqt execution: ${STATUS}")
 else()
-    message(STATUS "Success.")
+    message(STATUS "macdeployqt execution successful.")
 endif()
