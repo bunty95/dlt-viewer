@@ -78,5 +78,4 @@ set(QT6_VERSION "6.0")
 option(DLT_USE_STANDARD_INSTALLATION_LOCATION "Use standard GNU installation locations" OFF)
 option(DLT_INSTALL_SDK "Install in SDK location" ON)
 if(NOT WIN32)
-    if(NOT DLT_APP_DIR
-
+    if(NOT DLT_APP_DIR)
