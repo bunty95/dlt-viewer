@@ -2,10 +2,10 @@ if(NOT APPLE)
     return()
 endif()
 
-# See build.sh and src/cmake/Darwin.cmake
 set(CPACK_GENERATOR External)
 
-get_target_property(MOC_LOCATION ${QT_PREFIX}::moc LOCATION)
+# Use Qt6-specific moc and macdeployqt
+get_target_property(MOC_LOCATION Qt6::moc LOCATION)
 get_filename_component(MACDEPLOYQT_EXECUTABLE ${MOC_LOCATION}/../macdeployqt ABSOLUTE)
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/scripts/darwin/macdeployqt.cmake.in" "${CMAKE_BINARY_DIR}/macdeployqt.cmake" @ONLY)
 
