@@ -12,6 +12,8 @@
 # List of changes:
 # 01.Oct.2016, Jack Smith <jack.smith@elektrobit.com>, Original Author
 
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
+
 if("${QT_PREFIX}" STREQUAL "Qt6")
     QT6_ADD_RESOURCES(UI_RESOURCES_RCC resources/resource.qrc)
 else()
