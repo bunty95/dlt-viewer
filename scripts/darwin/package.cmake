@@ -5,8 +5,15 @@ endif()
 # See build.sh and src/cmake/Darwin.cmake
 set(CPACK_GENERATOR External)
 
-get_target_property(MOC_LOCATION ${QT_PREFIX}::moc LOCATION)
-get_filename_component(MACDEPLOYQT_EXECUTABLE ${MOC_LOCATION}/../macdeployqt ABSOLUTE)
+get_target_property(qmake_executable Qt6::qmake IMPORTED_LOCATION)
+get_filename_component(_qt_bin_dir "${qmake_executable}" DIRECTORY)
+find_program(MACDEPLOYQT_BIN macdeployqt HINT "${_qt_bin_dir}")
+
+# Link Qt dependencies to TestTarget.app bundle
+add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+        COMMAND ${MACDEPLOYQT_BIN} ${BUNDLE_NAME} -always-overwrite
+)
+
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/scripts/darwin/macdeployqt.cmake.in" "${CMAKE_BINARY_DIR}/macdeployqt.cmake" @ONLY)
 
 set(CPACK_EXTERNAL_PACKAGE_SCRIPT "${CMAKE_BINARY_DIR}/macdeployqt.cmake")
