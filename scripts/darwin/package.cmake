@@ -10,7 +10,7 @@ get_filename_component(_qt_bin_dir "${qmake_executable}" DIRECTORY)
 find_program(MACDEPLOYQT_BIN macdeployqt HINT "${_qt_bin_dir}")
 
 # Link Qt dependencies to TestTarget.app bundle
-add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+add_custom_command(TARGET ${DLT_APP_DIR_NAME} POST_BUILD
         COMMAND ${MACDEPLOYQT_BIN} ${BUNDLE_NAME} -always-overwrite
 )
 
