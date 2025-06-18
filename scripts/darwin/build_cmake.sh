@@ -12,7 +12,7 @@ mkdir -p "${BUILD_DIR}"
 cd "${BUILD_DIR}"
 
 if [[ $(uname -m) == 'arm64' ]]; then
-  Qt5_DIR="/opt/homebrew/opt/qt@5"
+  Qt5_DIR="/opt/homebrew/opt/qt"
   echo "Build with cmake $(uname -m) $Qt5_DIR"
   qmake ../BuildDltViewer.pro
 #  cmake ..
