@@ -43,7 +43,3 @@ if(STATUS AND NOT STATUS EQUAL 0)
 else()
     message(STATUS "Success.")
 endif()
-
-add_custom_command(TARGET ${{DLT_APP_DIR_NAME} POST_BUILD
-        COMMAND ${MACDEPLOYQT_EXECUTABLE} ${MACOSX_BUNDLE_BUNDLE_NAME} -always-overwrite
-)
