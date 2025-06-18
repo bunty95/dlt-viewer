@@ -50,6 +50,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 get_target_property(DLT_QT_LIBRARY_PATH ${QT_PREFIX}::Core IMPORTED_LOCATION)
 get_filename_component(DLT_QT_LIB_DIR ${DLT_QT_LIBRARY_PATH} DIRECTORY)
 
+if(APPLE)
+    set(DLT_QT_LIB_DIR "/opt/homebrew/opt/qt/lib/QtCore.framework")
+endif()
+
 
 if(NOT WIN32)
     option(DLT_USE_QT_RPATH "Use RPATH for QT_LIBRARY_PATH to support non-standard QT install locations" ON)
