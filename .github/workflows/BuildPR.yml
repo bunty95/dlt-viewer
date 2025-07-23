@@ -136,7 +136,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        osversion: [ 14, 15 ]
+        osversion: [ 13, 14, 15 ]
 
     steps:
     - name: Checkout source
